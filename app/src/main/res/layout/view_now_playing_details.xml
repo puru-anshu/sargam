@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.arutech.sargam.viewmodel.NowPlayingControllerViewModel"/>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/songInfo"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/player_frame_info_height"
+        android:background="?attr/colorPrimary"
+        android:paddingBottom="24dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <TextView
+            android:id="@+id/now_playing_detail_title"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="@{viewModel.songTitle}"
+            android:textColor="#ffffff"
+            android:textDirection="locale"
+            android:textSize="23sp"
+            app:layout_constraintBottom_toTopOf="@+id/now_playing_detail_artist"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/now_playing_detail_menu"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:text="Song Name"/>
+
+        <TextView
+            android:id="@+id/now_playing_detail_artist"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingTop="3dp"
+            android:text="@{viewModel.artistName}"
+            android:textColor="#ffffff"
+            android:textDirection="locale"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toTopOf="@+id/now_playing_detail_album"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/now_playing_detail_menu"
+            app:layout_constraintTop_toBottomOf="@+id/now_playing_detail_title"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:text="Artist Name"/>
+
+        <TextView
+            android:id="@+id/now_playing_detail_album"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingTop="3dp"
+            android:text="@{viewModel.albumName}"
+            android:textColor="#ffffff"
+            android:textDirection="locale"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/now_playing_detail_menu"
+            app:layout_constraintTop_toBottomOf="@+id/now_playing_detail_artist"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintRight_creator="1"
+            tools:text="Album Name"/>
+
+        <ImageButton
+            android:id="@+id/now_playing_detail_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="0dp"
+            android:background="?selectableItemBackgroundBorderless"
+            android:onClick="@{viewModel.onMoreInfoClick()}"
+            android:padding="10dp"
+            android:scaleType="center"
+            android:src="@drawable/ic_menu_24dp"
+            android:tint="@color/player_text_main"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_constraintLeft_creator="1"
+            tools:layout_constraintTop_creator="1"
+            tools:tint="?iconColor"/>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

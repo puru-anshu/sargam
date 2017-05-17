@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_library"
+
+            android:title="@string/header_songs" />
+        <item
+            android:id="@+id/nav_playlists"
+
+            android:title="@string/header_playlists" />
+        <item
+            android:id="@+id/nav_folders"
+
+            android:title="@string/header_folder" />
+        <item
+            android:id="@+id/nav_queue"
+
+            android:title="@string/header_queue" />
+        <item
+            android:id="@+id/nav_nowplaying"
+            android:checkable="false"
+            android:title="@string/header_now_playing" />
+
+    </group>
+
+    <group
+        android:id="@+id/group2"
+        android:checkableBehavior="none">
+        <item
+
+            android:id="@+id/nav_settings"
+            android:title="@string/header_settings" />
+
+        <item
+
+            android:id="@+id/nav_about"
+            android:title="@string/header_about" />
+
+        <item
+            android:id="@+id/nav_donate"
+            android:title="Support development" />
+
+    </group>
+
+</menu>

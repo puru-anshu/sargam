@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="artworkViewModel"
+            type="com.arutech.sargam.viewmodel.NowPlayingArtworkViewModel"/>
+    </data>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/now_playing_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+        <com.arutech.sargam.view.GestureView
+            android:id="@+id/now_playing_gesture_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/now_playing_control_fragment"
+            android:layout_toStartOf="@+id/now_playing_control_fragment"
+            android:foreground="@android:color/transparent"
+            app:leftIndicator="@drawable/ic_skip_next_36dp"
+            app:rightIndicator="@drawable/ic_skip_previous_36dp"
+            app:tapIndicator="@{artworkViewModel.tapIndicator}"
+            app:overlayColor="?attr/colorAccent"
+            app:gesturesEnabled="@{artworkViewModel.gesturesEnabled}"
+            app:gestureListener="@{artworkViewModel.gestureListener}">
+
+            <ImageView
+                android:id="@+id/now_playing_artwork"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:src="@{artworkViewModel.nowPlayingArtwork}"
+                android:background="@android:color/black"
+                android:scaleType="centerCrop"/>
+
+            <com.arutech.sargam.view.TimeView
+                android:id="@+id/now_playing_sleep_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                style="@style/TextAppearance.AppCompat.Button"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center_horizontal|bottom"
+                android:gravity="center"
+                android:drawableStart="@drawable/ic_sleep_timer_24dp"
+                android:drawableLeft="@drawable/ic_sleep_timer_24dp"
+                android:drawablePadding="8dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:layout_marginBottom="24dp"
+                tools:text="5:00"/>
+
+        </com.arutech.sargam.view.GestureView>
+
+        <fragment
+            android:id="@+id/now_playing_control_fragment"
+            android:name="com.arutech.sargam.fragments.PlayerControllerFragment"
+            android:layout_width="480dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            tools:layout="@layout/view_now_playing_control_panel" />
+
+        <fragment
+            android:id="@+id/now_playing_queue_fragment"
+            android:name="com.arutech.sargam.fragments.QueueFragment"
+            android:layout_width="480dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/now_playing_toolbar"
+            android:layout_above="@id/now_playing_control_fragment"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:layout="@layout/list"/>
+
+    </RelativeLayout>
+
+</layout>

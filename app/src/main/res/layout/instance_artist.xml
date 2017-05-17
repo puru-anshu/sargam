@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.arutech.sargam.viewmodel.ArtistViewModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:onClick="@{viewModel.onClickArtist()}"
+        android:orientation="vertical"
+        android:paddingBottom="8dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="8dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginEnd="36dp"
+                android:layout_marginRight="36dp"
+                android:orientation="vertical"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/artist_name"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@{viewModel.name}"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:id="@+id/album_song_count"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:paddingTop="3dp"
+                    android:singleLine="true"
+                    android:text="@{viewModel.soungCount}"
+                    android:textSize="13sp"/>
+
+
+            </LinearLayout>
+
+            <com.arutech.sargam.widgets.PopupImageView
+                android:id="@+id/artist_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="12dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="@{viewModel.onClickMenu()}"
+                android:padding="5dp"
+                android:src="@drawable/ic_more_vert_white_24dp"
+                android:tint="?iconColor"/>
+
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+</layout>

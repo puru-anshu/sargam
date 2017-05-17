@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="com.arutech.sargam"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
+
+    <application
+        android:name=".SargamApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.FullScreen.Light">
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="ddc26900ef56df7a12f799c5b1f391bf408b8d45"/>
+
+        <activity
+            android:name=".activity.MainActivity"
+            android:theme="@style/AppThemeNormalLight"
+            android:windowSoftInputMode="adjustPan|adjustNothing"/>
+
+        <activity-alias
+            android:name=".activity.LibraryActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:targetActivity=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts"/>
+        </activity-alias>
+        <activity-alias
+            android:name=".activity.LibraryActivity$Red"
+            android:enabled="false"
+            android:icon="@mipmap/ic_launcher_red"
+            android:targetActivity=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts"/>
+        </activity-alias>
+        <activity-alias
+            android:name=".activity.LibraryActivity$Orange"
+            android:enabled="false"
+            android:icon="@mipmap/ic_launcher_orange"
+            android:targetActivity=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts"/>
+        </activity-alias>
+        <activity-alias
+            android:name=".activity.LibraryActivity$Yellow"
+            android:enabled="false"
+            android:icon="@mipmap/ic_launcher_yellow"
+            android:targetActivity=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts"/>
+        </activity-alias>
+        <activity-alias
+            android:name=".activity.LibraryActivity$Green"
+            android:enabled="false"
+            android:icon="@mipmap/ic_launcher_green"
+            android:targetActivity=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts"/>
+        </activity-alias>
+        <activity-alias
+            android:name=".activity.LibraryActivity$Blue"
+            android:enabled="false"
+            android:icon="@mipmap/ic_launcher_blue"
+            android:targetActivity=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts"/>
+        </activity-alias>
+        <activity-alias
+            android:name=".activity.LibraryActivity$Purple"
+            android:enabled="false"
+            android:icon="@mipmap/ic_launcher_purple"
+            android:targetActivity=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts"/>
+        </activity-alias>
+        <activity-alias
+            android:name=".activity.LibraryActivity$Grey"
+            android:enabled="false"
+            android:icon="@mipmap/ic_launcher_grey"
+            android:targetActivity=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts"/>
+        </activity-alias>
+        <activity-alias
+            android:name=".activity.LibraryActivity$Black"
+            android:enabled="false"
+            android:icon="@mipmap/ic_launcher_black"
+            android:targetActivity=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts"/>
+        </activity-alias>
+
+        <!-- Search Activity -->
+        <activity
+            android:name=".activity.SearchActivity"
+            android:label="@string/header_search"
+            android:windowSoftInputMode="adjustPan|adjustNothing"/>
+
+        <!-- Instance Activities -->
+        <activity
+            android:name=".activity.instance.PlaylistActivity"
+            android:windowSoftInputMode="adjustPan|adjustNothing"/>
+        <activity
+            android:name=".activity.instance.AutoPlaylistActivity"
+            android:windowSoftInputMode="adjustPan|adjustNothing"/>
+        <activity
+            android:name=".activity.instance.AlbumActivity"
+            android:windowSoftInputMode="adjustPan|adjustNothing"/>
+        <activity
+            android:name=".activity.instance.ArtistActivity"
+            android:windowSoftInputMode="adjustPan|adjustNothing"/>
+        <activity
+            android:name=".activity.instance.GenreActivity"
+            android:windowSoftInputMode="adjustPan|adjustNothing"/>
+        <activity android:name=".activity.instance.AutoPlaylistEditActivity"/>
+
+        <!-- Play with Sargam(from search) intent filter -->
+        <activity-alias
+            android:name=".SearchWithSargam"
+            android:label="@string/app_name"
+            android:targetActivity=".activity.SearchActivity">
+            <intent-filter>
+                <action android:name="android.media.action.MEDIA_PLAY_FROM_SEARCH"/>
+                <action android:name="android.intent.action.MEDIA_SEARCH"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity-alias>
+
+        <!-- Play with Sargam (from file) intent filter -->
+        <activity-alias
+            android:name=".PlayWithSargam"
+            android:label="@string/app_name"
+            android:targetActivity=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:scheme="file"/>
+                <data android:scheme="content"/>
+                <data android:scheme="http"/>
+                <data android:scheme="https"/>
+                <data android:mimeType="audio/*"/>
+                <data android:mimeType="application/ogg"/>
+                <data android:mimeType="application/x-ogg"/>
+                <data android:mimeType="application/itunes"/>
+            </intent-filter>
+        </activity-alias>
+
+        <!-- About Activity -->
+        <activity android:name=".activity.AboutActivity"/>
+
+        <!-- Settings Activity -->
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:label="@string/header_settings"
+            android:screenOrientation="fullUser">
+            <intent-filter>
+                <action android:name=".PREFERENCES"/>
+
+                <category android:name="android.intent.category.preference"/>
+            </intent-filter>
+        </activity>
+
+        <!-- Broadcast Receivers -->
+        <receiver android:name="android.support.v4.media.session.MediaButtonReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON"/>
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".player.PlayerService"
+            android:exported="false"
+            android:process=":player">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON"/>
+            </intent-filter>
+        </service>
+
+        <!-- Widgets -->
+        <receiver
+            android:name=".widgets.SquareWidget"
+            android:label="@string/widget_square_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="marverenic.jockey.player.REFRESH"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/square_widget_info"/>
+        </receiver>
+        <receiver
+            android:name=".widgets.WideWidget"
+            android:label="@string/widget_wide_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="marverenic.jockey.player.REFRESH"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/wide_widget_info"/>
+        </receiver>
+        <receiver
+            android:name=".widgets.CompactWidget"
+            android:label="@string/widget_compact_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="marverenic.jockey.player.REFRESH"/>
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/compact_widget_info"/>
+        </receiver>
+
+        <!-- Broadcast Receivers -->
+        <receiver android:name="android.support.v4.media.session.MediaButtonReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_BUTTON"/>
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".player.ServicePlayerController$Listener"
+            android:exported="false">
+            <intent-filter android:priority="999">
+                <action android:name="marverenic.jockey.player.REFRESH"/>
+                <action android:name="marverenic.jockey.player.INFO"/>
+                <action android:name="marverenic.jockey.player.ERROR"/>
+            </intent-filter>
+        </receiver>
+
+        <activity android:name=".activity.DownloadActivity">
+        </activity>
+    </application>
+
+</manifest>

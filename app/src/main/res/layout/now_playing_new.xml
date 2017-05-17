@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="artworkViewModel"
+            type="com.arutech.sargam.viewmodel.NowPlayingArtworkViewModel"/>
+
+        <variable
+            name="viewModel"
+            type="com.arutech.sargam.viewmodel.NowPlayingControllerViewModel"/>
+
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true">
+
+            <ImageButton
+                android:id="@+id/now_playing_detail_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginBottom="0dp"
+                android:layout_marginTop="0dp"
+                android:background="?selectableItemBackgroundBorderless"
+                android:onClick="@{viewModel.onMoreInfoClick()}"
+                android:padding="10dp"
+                android:scaleType="center"
+                android:src="@drawable/ic_menu_24dp"
+                android:tint="@color/player_text_main"
+                tools:tint="?iconColor"
+                />
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.percent.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.arutech.sargam.view.GestureView
+                android:id="@+id/headerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:gestureListener="@{artworkViewModel.gestureListener}"
+                app:gesturesEnabled="@{artworkViewModel.gesturesEnabled}"
+                app:height="@{artworkViewModel.portraitArtworkHeight}"
+                app:layout_collapseMode="parallax"
+                app:layout_heightPercent="35%"
+                app:leftIndicator="@drawable/ic_skip_next_36dp"
+                app:overlayColor="?attr/colorAccent"
+                app:rightIndicator="@drawable/ic_skip_previous_36dp"
+                app:tapIndicator="@{artworkViewModel.tapIndicator}">
+
+                <ImageView
+                    android:id="@+id/album_art"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@{artworkViewModel.nowPlayingArtwork}"/>
+
+
+            </com.arutech.sargam.view.GestureView>
+
+            <LinearLayout
+                android:id="@+id/titleLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/headerView"
+                android:background="#66000000"
+                android:orientation="vertical"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="20dp">
+
+                <TextView
+                    android:id="@+id/song_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="@{viewModel.songTitle}"
+                    android:textColor="#ffffff"
+                    android:textSize="25sp"/>
+
+                <TextView
+                    android:id="@+id/song_artist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:paddingTop="3dp"
+                    android:text="@{viewModel.artistName}"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"/>
+
+                <com.arutech.sargam.view.TimeView
+                    android:id="@+id/now_playing_sleep_timer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:layout_marginBottom="24dp"
+                    android:drawableLeft="@drawable/ic_sleep_timer_24dp"
+                    android:drawablePadding="8dp"
+                    android:drawableStart="@drawable/ic_sleep_timer_24dp"
+                    android:gravity="center"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:textColor="@android:color/white"
+                    tools:text="5:00"/>
+
+
+                <include
+                    layout="@layout/view_now_playing_scrubber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:viewModel="@{viewModel}"/>
+
+
+                <TextView
+                    android:id="@+id/song_album"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.albumName}"
+                    android:textColor="#ffffff"
+                    android:visibility="visible"/>
+
+                <include
+                    android:id="@+id/now_playing_controller_controls"
+                    layout="@layout/view_now_playing_controls"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:padding="8dp"
+                    tools:viewModel="@{viewModel}"/>
+
+
+                <fragment
+                    android:id="@+id/now_playing_queue_fragment"
+                    android:name="com.arutech.sargam.fragments.QueueFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    tools:layout="@layout/list"/>
+
+
+            </LinearLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/now_playing_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="top"
+                android:layout_marginTop="@dimen/appBarTopMargin"
+                android:background="@android:color/transparent"
+                android:theme="@style/Theme.AppCompat"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+
+        </android.support.percent.PercentRelativeLayout>
+
+
+    </android.support.design.widget.CoordinatorLayout>
+</layout>

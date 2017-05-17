@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Settings Arrays -->
+    <string-array name="pages">
+        <item>Playlists</item>
+        <item>Songs</item>
+        <item>Artists</item>
+        <item>Albums</item>
+        <item>Genres</item>
+    </string-array>
+    <string-array name="page_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <string-array name="colors">
+        <item>Grey</item>
+        <item>Red</item>
+        <item>Orange</item>
+        <item>Yellow</item>
+        <item>Green</item>
+        <item>Cyan</item>
+        <item>Blue</item>
+        <item>Purple</item>
+        <item>Black</item>
+    </string-array>
+    <string-array name="color_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>8</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+    <integer-array name="primary_colors">
+        <item>@color/primary_grey</item>
+        <item>@color/primary_red</item>
+        <item>@color/primary_orange</item>
+        <item>@color/primary_yellow</item>
+        <item>@color/primary_green</item>
+        <item>@color/primary</item>
+        <item>@color/primary_blue</item>
+        <item>@color/primary_purple</item>
+        <item>@color/primary_black</item>
+    </integer-array>
+    <string-array name="accents">
+        <item>Grey</item>
+        <item>Red</item>
+        <item>Orange</item>
+        <item>Yellow</item>
+        <item>Green</item>
+        <item>Cyan</item>
+        <item>Blue</item>
+        <item>Purple</item>
+        <item>Teal</item>
+    </string-array>
+    <string-array name="accent_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>8</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+    <integer-array name="accent_colors">
+        <item>@color/accent_grey</item>
+        <item>@color/accent_red</item>
+        <item>@color/accent_orange</item>
+        <item>@color/accent_yellow</item>
+        <item>@color/accent_green</item>
+        <item>@color/accent</item>
+        <item>@color/accent_blue</item>
+        <item>@color/accent_purple</item>
+        <item>@color/accent_black</item>
+    </integer-array>
+    <string-array name="themes">
+        <item name="0">Dark</item>
+        <item name="1">Light</item>
+        <item name="2">Automatic</item>
+    </string-array>
+    <string-array name="theme_values">
+        <item name="0">0</item>
+        <item name="1">1</item>
+        <item name="2">2</item>
+    </string-array>
+
+</resources>

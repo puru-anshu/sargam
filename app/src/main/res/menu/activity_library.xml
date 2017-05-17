@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_library_search"
+        android:icon="@drawable/ic_search_24dp"
+        android:title="@string/header_search"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menu_library_download"
+        android:icon="@drawable/ic_file_download_white_24dp"
+        android:title="Download Songs"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/menu_library_settings"
+        android:title="@string/action_settings" />
+
+    <item
+        android:id="@+id/menu_library_about"
+        android:title="@string/header_about" />
+
+</menu>

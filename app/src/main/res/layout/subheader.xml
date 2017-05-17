@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/subheader_frame"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
+
+    <TextView
+        android:id="@+id/subheader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Preference_TextAppearanceMaterialSubhead"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textSize="14sp"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="?attr/colorAccent"
+        android:layout_gravity="center" />
+
+</FrameLayout>

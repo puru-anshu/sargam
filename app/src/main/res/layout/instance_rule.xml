@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="viewModel" type="com.arutech.sargam.viewmodel.RuleViewModel"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/list_padding"
+        android:background="@android:color/transparent">
+
+        <!--        !!!     Do not remove this layout's background property     !!!
+
+            We need to explicitly set this layout's background so that spinners show the arrow on
+            Marshmallow and higher (even though we want it to be transparent)
+         -->
+
+        <Spinner
+            android:id="@+id/auto_rule_type_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:entries="@array/auto_plist_types"
+            app:onItemSelectedListener="@{viewModel.typeSelectedListener}"
+            app:selection="@{viewModel.selectedType}"/>
+
+        <Spinner
+            android:id="@+id/auto_rule_field_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/auto_rule_type_spinner"
+            android:layout_toEndOf="@+id/auto_rule_type_spinner"
+            android:prompt="@{viewModel.fieldPrompt}"
+            android:spinnerMode="dialog"
+            app:adapter="@{viewModel.filterAdapter}"
+            app:selection="@{viewModel.selectedFilter}"
+            app:onItemSelectedListener="@{viewModel.filterSelectedListener}"/>
+
+        <Spinner
+            android:id="@+id/auto_rule_value_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.valueSpinnerVisibility}"
+            android:prompt="@{viewModel.valuePrompt}"
+            android:spinnerMode="dialog"
+            android:layout_marginTop="8dp"
+            android:layout_toStartOf="@+id/auto_rule_remove"
+            android:layout_toLeftOf="@+id/auto_rule_remove"
+            android:layout_below="@id/auto_rule_field_spinner"
+            app:adapter="@{viewModel.valueAdapter}"
+            app:selection="@{viewModel.selectedValue}"
+            app:onItemSelectedListener="@{viewModel.valueSelectedListener}"/>
+
+        <FrameLayout
+            android:id="@+id/auto_rule_value_text_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:visibility="@{viewModel.valueTextVisibility}"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp"
+            android:layout_toStartOf="@+id/auto_rule_remove"
+            android:layout_toLeftOf="@+id/auto_rule_remove"
+            android:layout_below="@id/auto_rule_field_spinner">
+
+            <TextView
+                android:id="@+id/auto_rule_value_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.AppCompat.EditText"
+                android:focusable="false"
+                android:layout_gravity="center_vertical"
+                android:text="@{viewModel.valueText}"
+                android:onClick="@{viewModel.onValueTextClick()}"/>
+
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/auto_rule_remove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_clear_24dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/auto_rule_field_spinner"
+            android:onClick="@{viewModel.onRemoveClick()}"/>
+
+    </RelativeLayout>
+</layout>

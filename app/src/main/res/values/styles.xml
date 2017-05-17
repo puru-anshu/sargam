@@ -1,0 +1,230 @@
+<resources>
+    <attr format="reference" name="cardStyle"/>
+    <attr format="reference" name="accentColor"/>
+    <attr format="reference" name="iconColor"/>
+    <attr format="reference" name="windowBackground"/>
+    <attr format="reference" name="progressBackgroundColor"/>
+    <attr format="reference" name="progressDrawable"/>
+    <attr format="reference" name="progressDrawableWithBackground" />
+    <attr format="reference" name="stateSelector" />
+
+    <style name="ThemeBaseLight" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent_yellow</item>
+        <item name="android:windowBackground">@color/widget_background</item>
+        <item name="cardStyle">@style/CardViewStyle.Light</item>
+        <item name="accentColor">@color/accent_yellow</item>
+        <item name="iconColor">@color/widget_button</item>
+        <item name="windowBackground">@color/widget_background</item>
+        <item name="stateSelector">@color/state_selector_light</item>
+        <item name="progressBackgroundColor">@color/progressBackgroundColorLight</item>
+        <item name="progressDrawable">@drawable/progress_drawable</item>
+        <item name="progressDrawableWithBackground">@drawable/progress_drawable_withbackground</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+    </style>
+
+    <style name="AppThemeLight" parent="ThemeBaseLight">
+    </style>
+
+    <style name="AppThemeNormalLight" parent="ThemeBaseLight">
+    </style>
+
+    <style name="AppTheme.FullScreen.Light" parent="ThemeBaseLight">
+    </style>
+
+
+
+    <style name="Primary">
+        <!--item name="colorPrimary">@color/primary</item-->
+        <!--item name="colorPrimaryDark">@color/dark_red</item-->
+    </style>
+    <style name="Primary.Red">
+        <item name="colorPrimary">@color/primary_red</item>
+        <item name="colorPrimaryDark">@color/primary_dark_red</item>
+    </style>
+
+    <style name="Primary.Orange">
+        <item name="colorPrimary">@color/primary_orange</item>
+        <item name="colorPrimaryDark">@color/primary_dark_orange</item>
+    </style>
+
+    <style name="Primary.Yellow">
+        <item name="colorPrimary">@color/primary_yellow</item>
+        <item name="colorPrimaryDark">@color/primary_dark_yellow</item>
+    </style>
+
+    <style name="Primary.Green">
+        <item name="colorPrimary">@color/primary_green</item>
+        <item name="colorPrimaryDark">@color/primary_dark_green</item>
+    </style>
+
+    <style name="Primary.Cyan">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+    </style>
+
+    <style name="Primary.Blue">
+        <item name="colorPrimary">@color/primary_blue</item>
+        <item name="colorPrimaryDark">@color/primary_dark_blue</item>
+    </style>
+
+    <style name="Primary.Purple">
+        <item name="colorPrimary">@color/primary_purple</item>
+        <item name="colorPrimaryDark">@color/primary_dark_purple</item>
+    </style>
+
+    <style name="Primary.Grey">
+        <item name="colorPrimary">@color/primary_grey</item>
+        <item name="colorPrimaryDark">@color/primary_dark_grey</item>
+    </style>
+
+    <style name="Primary.Black">
+        <item name="colorPrimary">@color/primary_black</item>
+        <item name="colorPrimaryDark">@color/primary_dark_black</item>
+    </style>
+
+    <style name="Accent">
+        <!--item name="colorAccent">@color/accent</item-->
+        <!--item name="colorControlHighlight">@color/accent</item-->
+        <!--tem name="alertDialogTheme">@style/Accent.AlertDialog</item-->
+    </style>
+
+    <style name="Accent.Red">
+        <item name="colorAccent">@color/accent_red</item>
+        <item name="colorControlHighlight">@color/accent_red</item>
+        <item name="alertDialogTheme">@style/Accent.Red.AlertDialog</item>
+    </style>
+
+    <style name="Accent.Red.AlertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="colorAccent">@color/accent_red</item>
+    </style>
+
+    <style name="Accent.Orange">
+        <item name="colorAccent">@color/accent_orange</item>
+        <item name="colorControlHighlight">@color/accent_orange</item>
+        <item name="alertDialogTheme">@style/Accent.Orange.AlertDialog</item>
+    </style>
+
+    <style name="Accent.Orange.AlertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="colorAccent">@color/accent_orange</item>
+    </style>
+
+    <style name="Accent.Yellow">
+        <item name="colorAccent">@color/accent_yellow</item>
+        <item name="colorControlHighlight">@color/accent_yellow</item>
+        <item name="alertDialogTheme">@style/Accent.Yellow.AlertDialog</item>
+    </style>
+
+    <style name="Accent.Yellow.AlertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="colorAccent">@color/accent_yellow</item>
+    </style>
+
+    <style name="Accent.Green">
+        <item name="colorAccent">@color/accent_green</item>
+        <item name="colorControlHighlight">@color/accent_green</item>
+        <item name="alertDialogTheme">@style/Accent.Green.AlertDialog</item>
+    </style>
+
+    <style name="Accent.Green.AlertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="colorAccent">@color/accent_green</item>
+    </style>
+
+    <style name="Accent.Cyan">
+        <item name="colorAccent">@color/accent</item>
+        <item name="colorControlHighlight">@color/accent</item>
+        <item name="alertDialogTheme">@style/Accent.Cyan.AlertDialog</item>
+    </style>
+
+    <style name="Accent.Cyan.AlertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="colorAccent">@color/accent</item>
+    </style>
+
+    <style name="Accent.Blue">
+        <item name="colorAccent">@color/accent_blue</item>
+        <item name="colorControlHighlight">@color/accent_blue</item>
+        <item name="alertDialogTheme">@style/Accent.Blue.AlertDialog</item>
+    </style>
+
+    <style name="Accent.Blue.AlertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="colorAccent">@color/accent_blue</item>
+    </style>
+
+    <style name="Accent.Purple">
+        <item name="colorAccent">@color/accent_purple</item>
+        <item name="colorControlHighlight">@color/accent_purple</item>
+        <item name="alertDialogTheme">@style/Accent.Purple.AlertDialog</item>
+    </style>
+
+    <style name="Accent.Purple.AlertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="colorAccent">@color/accent_purple</item>
+    </style>
+
+    <style name="Accent.Grey">
+        <item name="colorAccent">@color/accent_grey</item>
+        <item name="colorControlHighlight">@color/accent_grey</item>
+        <item name="alertDialogTheme">@style/Accent.Grey.AlertDialog</item>
+    </style>
+
+    <style name="Accent.Grey.AlertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="colorAccent">@color/accent_grey</item>
+    </style>
+
+    <style name="Accent.Black">
+        <item name="colorAccent">@color/accent_black</item>
+        <item name="colorControlHighlight">@color/accent_black</item>
+        <item name="alertDialogTheme">@style/Accent.Black.AlertDialog</item>
+    </style>
+
+    <style name="Accent.Black.AlertDialog" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+        <item name="colorAccent">@color/accent_black</item>
+    </style>
+
+
+
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@android:color/white</item>
+    </style>
+
+
+
+    <style name="TextApperance.Album.Title" parent="@style/TextAppearance.AppCompat.Large">
+        <item name="android:textSize">29sp</item>
+    </style>
+
+    <style name="TextApperance.Artist.Title" parent="@style/TextAppearance.AppCompat.Large">
+        <item name="android:textSize">29sp</item>
+    </style>
+
+    <style name="TransparentText" parent="@android:style/TextAppearance">
+        <item name="android:textColor">#00666666</item>
+    </style>
+
+
+    <style name="FabStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">16dp</item>
+        <item name="borderWidth">0dp</item>
+        <item name="elevation">6dp</item>
+        <item name="pressedTranslationZ">12dp</item>
+        <item name="rippleColor">@android:color/white</item>
+    </style>
+
+    <style name="CardViewStyle.Light" parent="CardView">
+        <item name="cardBackgroundColor">@color/window_background</item>
+    </style>
+
+    <style name="CardViewStyle.Dark" parent="CardView">
+        <item name="cardBackgroundColor">@color/window_background_dark</item>
+    </style>
+
+    <style name="CardViewStyle.Black" parent="CardView">
+        <item name="cardBackgroundColor">@color/window_background_black</item>
+    </style>
+
+
+
+</resources>
