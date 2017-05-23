@@ -1,6 +1,5 @@
 package com.arutech.sargam.activity;
 
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
@@ -29,7 +28,6 @@ import com.arutech.sargam.data.store.ThemeStore;
 import com.arutech.sargam.dialog.CreatePlaylistDialogFragment;
 import com.arutech.sargam.fragments.AlbumFragment;
 import com.arutech.sargam.fragments.ArtistFragment;
-import com.arutech.sargam.fragments.GenreFragment;
 import com.arutech.sargam.fragments.PlaylistFragment;
 import com.arutech.sargam.fragments.SongFragment;
 import com.arutech.sargam.model.Song;
@@ -44,8 +42,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import rx.Observable;
+import io.reactivex.Observable;
 import timber.log.Timber;
+
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class MainActivity extends BaseLibraryActivity implements View.OnClickListener {
 
@@ -209,9 +210,7 @@ public class MainActivity extends BaseLibraryActivity implements View.OnClickLis
 		mRefreshLayout.setEnabled(false);
 
 		Observable.combineLatest(mMusicStore.isLoading(), mPlaylistStore.isLoading(),
-				(musicLoading, playlistLoading) -> {
-					return musicLoading || playlistLoading;
-				})
+				(musicLoading, playlistLoading) -> musicLoading || playlistLoading)
 				.compose(bindToLifecycle())
 				.subscribe(
 						refreshing -> {
@@ -225,8 +224,8 @@ public class MainActivity extends BaseLibraryActivity implements View.OnClickLis
 	@TargetApi(Build.VERSION_CODES.M)
 	private boolean hasRwPermission() {
 		return Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Util.hasPermissions(this,
-				Manifest.permission.WRITE_EXTERNAL_STORAGE,
-				Manifest.permission.READ_EXTERNAL_STORAGE);
+				WRITE_EXTERNAL_STORAGE,
+				READ_EXTERNAL_STORAGE);
 	}
 
 	@Override
@@ -274,14 +273,14 @@ public class MainActivity extends BaseLibraryActivity implements View.OnClickLis
 		return R.id.library_pager;
 	}
 
-	public class PagerAdapter extends FragmentPagerAdapter
+	class PagerAdapter extends FragmentPagerAdapter
 			implements ViewPager.OnPageChangeListener {
 
 		private PlaylistFragment playlistFragment;
 		private SongFragment songFragment;
 		private ArtistFragment artistFragment;
 		private AlbumFragment albumFragment;
-		private GenreFragment genreFragment;
+		//private GenreFragment genreFragment;
 
 		private FABMenu fab;
 

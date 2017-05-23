@@ -7,8 +7,9 @@ import com.arutech.sargam.lastfm.model.LfmArtist;
 
 import java.io.IOException;
 
-import rx.Observable;
-import rx.exceptions.Exceptions;
+import io.reactivex.Observable;
+import io.reactivex.exceptions.Exceptions;
+
 
 public class NetworkLastFmStore implements LastFmStore {
 

@@ -16,7 +16,7 @@ import com.arutech.sargam.model.Song;
 
 import java.util.List;
 
-import rx.Observable;
+import io.reactivex.Observable;
 import timber.log.Timber;
 
 import static android.support.design.widget.Snackbar.LENGTH_LONG;

@@ -21,334 +21,312 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import rx.subjects.BehaviorSubject;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.BehaviorSubject;
 import timber.log.Timber;
 
 public class LocalPlaylistStore implements PlaylistStore {
 
-    private static final String AUTO_PLAYLIST_EXTENSION = ".jpl";
+	private static final String AUTO_PLAYLIST_EXTENSION = ".jpl";
 
-    // Used to generate Auto Playlist contents
-    private MusicStore mMusicStore;
-    private PlayCountStore mPlayCountStore;
+	// Used to generate Auto Playlist contents
+	private MusicStore mMusicStore;
+	private PlayCountStore mPlayCountStore;
 
-    private Context mContext;
-    private BehaviorSubject<List<Playlist>> mPlaylists;
-    private Map<Playlist, BehaviorSubject<List<Song>>> mPlaylistContents;
+	private Context mContext;
+	private BehaviorSubject<List<Playlist>> mPlaylists;
+	private Map<Playlist, BehaviorSubject<List<Song>>> mPlaylistContents;
 
-    private BehaviorSubject<Boolean> mLoadingState;
+	private BehaviorSubject<Boolean> mLoadingState;
 
-    public LocalPlaylistStore(Context context, MusicStore musicStore,
-                              PlayCountStore playCountStore) {
-        mContext = context;
-        mMusicStore = musicStore;
-        mPlayCountStore = playCountStore;
-        mPlaylistContents = new ArrayMap<>();
-        mLoadingState = BehaviorSubject.create(false);
+	public LocalPlaylistStore(Context context, MusicStore musicStore,
+	                          PlayCountStore playCountStore) {
+		mContext = context;
+		mMusicStore = musicStore;
+		mPlayCountStore = playCountStore;
+		mPlaylistContents = new ArrayMap<>();
+		mLoadingState = BehaviorSubject.createDefault(false);
+		bindRefreshListener();
 
-        MediaStoreUtil.waitForPermission()
-                .subscribe(permission -> bindRefreshListener(), throwable -> {
-                    Timber.e(throwable, "Failed to bind refresh listener");
-                });
-    }
+	}
 
-    private void bindRefreshListener() {
-        MediaStoreUtil.getContentObserver(mContext, MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI)
-                .subscribe(selfChange -> refresh(), throwable -> {
-                    Timber.e(throwable, "Failed to automatically refresh playlists");
-                });
-    }
+	private void bindRefreshListener() {
+		MediaStoreUtil.getContentObserver(mContext, MediaStore.Audio.Playlists.EXTERNAL_CONTENT_URI)
+				.subscribe(selfChange -> refresh(), throwable -> {
+					Timber.e(throwable, "Failed to automatically refresh playlists");
+				});
+	}
 
-    @Override
-    public void loadPlaylists() {
-        getPlaylists().take(1).subscribe();
-    }
+	@Override
+	public void loadPlaylists() {
+		getPlaylists().take(1).subscribe();
+	}
 
-    @Override
-    public Observable<Boolean> refresh() {
-        if (mPlaylists == null) {
-            return Observable.just(true);
-        }
+	@Override
+	public Observable<Boolean> refresh() {
+		if (mPlaylists == null) {
+			return Observable.just(true);
+		}
+		return Observable.fromCallable(
+				() -> {
+					mLoadingState.onNext(true);
+					if (mPlaylists != null) {
+						mPlaylists.onNext(getAllPlaylists());
+						mPlaylistContents.clear();
+					}
+					mLoadingState.onNext(false);
+					return true;
+				});
+	}
 
-        mLoadingState.onNext(true);
+	@Override
+	public Observable<Boolean> isLoading() {
+		return mLoadingState.observeOn(AndroidSchedulers.mainThread());
+	}
 
-        BehaviorSubject<Boolean> result = BehaviorSubject.create();
+	@Override
+	public Observable<List<Playlist>> getPlaylists() {
+		if (mPlaylists == null) {
+			mPlaylists = BehaviorSubject.createDefault(Collections.emptyList());
+			mLoadingState.onNext(true);
+			if (MediaStoreUtil.hasPermission(mContext)) {
+				mPlaylists.onNext(getAllPlaylists());
+			}
+			mLoadingState.onNext(false);
+		}
+		return mPlaylists.observeOn(AndroidSchedulers.mainThread());
+	}
 
-        MediaStoreUtil.promptPermission(mContext)
-		        .onBackpressureDrop()
-                .observeOn(Schedulers.io())
-                .map(granted -> {
-                    if (granted && mPlaylists != null) {
-                        mPlaylists.onNext(getAllPlaylists());
-                        mPlaylistContents.clear();
-                    }
-                    mLoadingState.onNext(false);
-                    return granted;
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(result);
+	private List<Playlist> getAllPlaylists() {
+		return MediaStoreUtil.getAllPlaylists(mContext);
+	}
 
-        return result;
-    }
+	@Override
+	public Observable<List<Song>> getSongs(Playlist playlist) {
+		if (playlist instanceof AutoPlaylist) {
+			return getAutoPlaylistSongs((AutoPlaylist) playlist);
+		} else {
+			return getPlaylistSongs(playlist);
+		}
+	}
 
-    @Override
-    public Observable<Boolean> isLoading() {
-        return mLoadingState.asObservable().observeOn(AndroidSchedulers.mainThread());
-    }
+	private Observable<List<Song>> getPlaylistSongs(Playlist playlist) {
+		BehaviorSubject<List<Song>> subject;
 
-    @Override
-    public Observable<List<Playlist>> getPlaylists() {
-        if (mPlaylists == null) {
-            mPlaylists = BehaviorSubject.create();
-            mLoadingState.onNext(true);
+		if (mPlaylistContents.containsKey(playlist)) {
+			subject = mPlaylistContents.get(playlist);
+		} else {
+			subject = BehaviorSubject.createDefault(MediaStoreUtil.getPlaylistSongs(mContext, playlist));
+			mPlaylistContents.put(playlist, subject);
+		}
 
-            MediaStoreUtil.getPermission(mContext)
-                    .observeOn(Schedulers.io())
-                    .subscribe(granted -> {
-                        if (granted) {
-                            mPlaylists.onNext(getAllPlaylists());
-                        } else {
-                            mPlaylists.onNext(Collections.emptyList());
-                        }
-                        mLoadingState.onNext(false);
-                    }, throwable -> {
-                        Timber.e(throwable, "Failed to query MediaStore for playlists");
-                    });
-        }
-        return mPlaylists.asObservable().observeOn(AndroidSchedulers.mainThread());
-    }
+		return subject;
+	}
 
-    private List<Playlist> getAllPlaylists() {
-        return MediaStoreUtil.getAllPlaylists(mContext);
-    }
+	private Observable<List<Song>> getAutoPlaylistSongs(AutoPlaylist playlist) {
+		BehaviorSubject<List<Song>> subject;
 
-    @Override
-    public Observable<List<Song>> getSongs(Playlist playlist) {
-        if (playlist instanceof AutoPlaylist) {
-            return getAutoPlaylistSongs((AutoPlaylist) playlist);
-        } else {
-            return getPlaylistSongs(playlist);
-        }
-    }
+		if (mPlaylistContents.containsKey(playlist)) {
+			subject = mPlaylistContents.get(playlist);
+		} else {
+			subject = BehaviorSubject.create();
+			mPlaylistContents.put(playlist, subject);
 
-    private Observable<List<Song>> getPlaylistSongs(Playlist playlist) {
-        BehaviorSubject<List<Song>> subject;
+			playlist.generatePlaylist(mMusicStore, this, mPlayCountStore)
+					.subscribe(subject::onNext, subject::onError);
 
-        if (mPlaylistContents.containsKey(playlist)) {
-            subject = mPlaylistContents.get(playlist);
-        } else {
-            subject = BehaviorSubject.create(MediaStoreUtil.getPlaylistSongs(mContext, playlist));
-            mPlaylistContents.put(playlist, subject);
-        }
+			subject.observeOn(Schedulers.io())
+					.subscribe(contents -> {
+						editPlaylist(playlist, contents);
+					}, throwable -> {
+						Timber.e(throwable, "Failed to save playlist contents");
+					});
+		}
 
-        return subject.asObservable();
-    }
+		return subject.observeOn(AndroidSchedulers.mainThread());
+	}
 
-    private Observable<List<Song>> getAutoPlaylistSongs(AutoPlaylist playlist) {
-        BehaviorSubject<List<Song>> subject;
+	@Override
+	public Observable<List<Playlist>> searchForPlaylists(String query) {
+		if (query == null || query.isEmpty()) {
+			return Observable.just(Collections.emptyList());
+		}
 
-        if (mPlaylistContents.containsKey(playlist)) {
-            subject = mPlaylistContents.get(playlist);
-        } else {
-            subject = BehaviorSubject.create();
-            mPlaylistContents.put(playlist, subject);
+		return getPlaylists().map(playlists -> {
+			List<Playlist> filtered = new ArrayList<>();
+			String lowerCaseQuery = query.toLowerCase();
 
-            playlist.generatePlaylist(mMusicStore, this, mPlayCountStore)
-                    .subscribe(subject::onNext, subject::onError);
+			for (Playlist playlist : playlists) {
+				if (playlist.getPlaylistName().toLowerCase().contains(lowerCaseQuery)) {
+					filtered.add(playlist);
+				}
+			}
 
-            subject.observeOn(Schedulers.io())
-                    .subscribe(contents -> {
-                        editPlaylist(playlist, contents);
-                    }, throwable -> {
-                        Timber.e(throwable, "Failed to save playlist contents");
-                    });
-        }
+			return filtered;
+		});
+	}
 
-        return subject.asObservable().observeOn(AndroidSchedulers.mainThread());
-    }
+	@Override
+	public String verifyPlaylistName(String playlistName) {
+		if (playlistName == null || playlistName.trim().isEmpty()) {
+			return mContext.getString(R.string.error_hint_empty_playlist);
+		}
 
-    @Override
-    public Observable<List<Playlist>> searchForPlaylists(String query) {
-        if (query == null || query.isEmpty()) {
-            return Observable.just(Collections.emptyList());
-        }
+		if (MediaStoreUtil.findPlaylistByName(mContext, playlistName) != null) {
+			return mContext.getString(R.string.error_hint_duplicate_playlist);
+		}
 
-        return getPlaylists().map(playlists -> {
-            List<Playlist> filtered = new ArrayList<>();
-            String lowerCaseQuery = query.toLowerCase();
+		return null;
+	}
 
-            for (Playlist playlist : playlists) {
-                if (playlist.getPlaylistName().toLowerCase().contains(lowerCaseQuery)) {
-                    filtered.add(playlist);
-                }
-            }
+	@Override
+	public Playlist makePlaylist(String name) {
+		return makePlaylist(name, null);
+	}
 
-            return filtered;
-        });
-    }
+	@Override
+	public AutoPlaylist makePlaylist(AutoPlaylist playlist) {
+		Playlist localReference = MediaStoreUtil.createPlaylist(mContext,
+				playlist.getPlaylistName(), Collections.emptyList());
 
-    @Override
-    public String verifyPlaylistName(String playlistName) {
-        if (playlistName == null || playlistName.trim().isEmpty()) {
-            return mContext.getString(R.string.error_hint_empty_playlist);
-        }
+		AutoPlaylist created = new AutoPlaylist.Builder(playlist)
+				.setId(localReference.getPlaylistId())
+				.build();
 
-        if (MediaStoreUtil.findPlaylistByName(mContext, playlistName) != null) {
-            return mContext.getString(R.string.error_hint_duplicate_playlist);
-        }
+		saveAutoPlaylistConfiguration(created);
 
-        return null;
-    }
+		if (mPlaylists != null && mPlaylists.getValue() != null) {
+			List<Playlist> updatedPlaylists = new ArrayList<>(mPlaylists.getValue());
+			updatedPlaylists.add(created);
+			Collections.sort(updatedPlaylists);
 
-    @Override
-    public Playlist makePlaylist(String name) {
-        return makePlaylist(name, null);
-    }
+			mPlaylists.onNext(updatedPlaylists);
+		}
 
-    @Override
-    public AutoPlaylist makePlaylist(AutoPlaylist playlist) {
-        Playlist localReference = MediaStoreUtil.createPlaylist(mContext,
-                playlist.getPlaylistName(), Collections.emptyList());
+		return created;
+	}
 
-        AutoPlaylist created = new AutoPlaylist.Builder(playlist)
-                .setId(localReference.getPlaylistId())
-                .build();
+	@Override
+	public Playlist makePlaylist(String name, @Nullable List<Song> songs) {
+		Playlist created = MediaStoreUtil.createPlaylist(mContext, name, songs);
 
-        saveAutoPlaylistConfiguration(created);
+		if (mPlaylists != null && mPlaylists.getValue() != null) {
+			List<Playlist> updated = new ArrayList<>(mPlaylists.getValue());
+			updated.add(created);
+			Collections.sort(updated);
 
-        if (mPlaylists != null && mPlaylists.getValue() != null) {
-            List<Playlist> updatedPlaylists = new ArrayList<>(mPlaylists.getValue());
-            updatedPlaylists.add(created);
-            Collections.sort(updatedPlaylists);
+			mPlaylists.onNext(updated);
+		}
 
-            mPlaylists.onNext(updatedPlaylists);
-        }
+		return created;
+	}
 
-        return created;
-    }
+	@Override
+	public void removePlaylist(Playlist playlist) {
+		MediaStoreUtil.deletePlaylist(mContext, playlist);
+		mPlaylistContents.remove(playlist);
 
-    @Override
-    public Playlist makePlaylist(String name, @Nullable List<Song> songs) {
-        Playlist created = MediaStoreUtil.createPlaylist(mContext, name, songs);
+		if (mPlaylists != null && mPlaylists.getValue() != null) {
+			List<Playlist> updated = new ArrayList<>(mPlaylists.getValue());
+			updated.remove(playlist);
 
-        if (mPlaylists != null && mPlaylists.getValue() != null) {
-            List<Playlist> updated = new ArrayList<>(mPlaylists.getValue());
-            updated.add(created);
-            Collections.sort(updated);
+			mPlaylists.onNext(updated);
+		}
+	}
 
-            mPlaylists.onNext(updated);
-        }
+	@Override
+	public void editPlaylist(Playlist playlist, List<Song> newSongs) {
+		MediaStoreUtil.editPlaylist(mContext, playlist, newSongs);
+		if (mPlaylistContents.containsKey(playlist)) {
+			mPlaylistContents.get(playlist).onNext(new ArrayList<>(newSongs));
+		}
+	}
 
-        return created;
-    }
+	@Override
+	public void editPlaylist(AutoPlaylist replacement) {
+		saveAutoPlaylistConfiguration(replacement);
 
-    @Override
-    public void removePlaylist(Playlist playlist) {
-        MediaStoreUtil.deletePlaylist(mContext, playlist);
-        mPlaylistContents.remove(playlist);
+		if (mPlaylists != null && mPlaylists.getValue() != null) {
+			List<Playlist> updatedPlaylists = new ArrayList<>(mPlaylists.getValue());
 
-        if (mPlaylists != null && mPlaylists.getValue() != null) {
-            List<Playlist> updated = new ArrayList<>(mPlaylists.getValue());
-            updated.remove(playlist);
+			int index = updatedPlaylists.indexOf(replacement);
+			updatedPlaylists.set(index, replacement);
 
-            mPlaylists.onNext(updated);
-        }
-    }
+			mPlaylists.onNext(updatedPlaylists);
+		}
+	}
 
-    @Override
-    public void editPlaylist(Playlist playlist, List<Song> newSongs) {
-        MediaStoreUtil.editPlaylist(mContext, playlist, newSongs);
-        if (mPlaylistContents.containsKey(playlist)) {
-            mPlaylistContents.get(playlist).onNext(new ArrayList<>(newSongs));
-        }
-    }
+	private void saveAutoPlaylistConfiguration(AutoPlaylist playlist) {
+		// Write an initial set of values to the MediaStore so other apps can see this playlist
+		playlist.generatePlaylist(mMusicStore, this, mPlayCountStore)
+				.take(1)
+				.observeOn(Schedulers.io())
+				.subscribe(contents -> {
+					editPlaylist(playlist, contents);
 
-    @Override
-    public void editPlaylist(AutoPlaylist replacement) {
-        saveAutoPlaylistConfiguration(replacement);
+					// Cache this result in memory
+					BehaviorSubject<List<Song>> contentsSubject;
+					if (mPlaylistContents.containsKey(playlist)) {
+						contentsSubject = mPlaylistContents.get(playlist);
+					} else {
+						contentsSubject = BehaviorSubject.create();
+						mPlaylistContents.put(playlist, contentsSubject);
+					}
+					contentsSubject.onNext(contents);
 
-        if (mPlaylists != null && mPlaylists.getValue() != null) {
-            List<Playlist> updatedPlaylists = new ArrayList<>(mPlaylists.getValue());
+					try {
+						writeAutoPlaylistConfiguration(playlist);
+					} catch (IOException e) {
+						Timber.e(e, "Failed to write autoPlaylist configuration");
+					}
+				}, throwable -> {
+					Timber.e(throwable, "makePlaylist: Failed to initialize contents");
+				});
+	}
 
-            int index = updatedPlaylists.indexOf(replacement);
-            updatedPlaylists.set(index, replacement);
+	private void writeAutoPlaylistConfiguration(AutoPlaylist playlist) throws IOException {
+		Gson gson = new GsonBuilder()
+				.setPrettyPrinting()
+				.registerTypeAdapter(AutoPlaylistRule.class, new AutoPlaylistRule.RuleTypeAdapter())
+				.create();
+		FileWriter writer = null;
 
-            mPlaylists.onNext(updatedPlaylists);
-        }
-    }
+		try {
+			String filename = playlist.getPlaylistName() + AUTO_PLAYLIST_EXTENSION;
+			String fullPath = mContext.getExternalFilesDir(null) + File.separator + filename;
 
-    private void saveAutoPlaylistConfiguration(AutoPlaylist playlist) {
-        // Write an initial set of values to the MediaStore so other apps can see this playlist
-        playlist.generatePlaylist(mMusicStore, this, mPlayCountStore)
-                .take(1)
-                .observeOn(Schedulers.io())
-                .subscribe(contents -> {
-                    editPlaylist(playlist, contents);
+			writer = new FileWriter(fullPath);
+			writer.write(gson.toJson(playlist, AutoPlaylist.class));
+		} finally {
+			if (writer != null) {
+				writer.close();
+			}
+		}
+	}
 
-                    // Cache this result in memory
-                    BehaviorSubject<List<Song>> contentsSubject;
-                    if (mPlaylistContents.containsKey(playlist)) {
-                        contentsSubject = mPlaylistContents.get(playlist);
-                    } else {
-                        contentsSubject = BehaviorSubject.create();
-                        mPlaylistContents.put(playlist, contentsSubject);
-                    }
-                    contentsSubject.onNext(contents);
+	@Override
+	public void addToPlaylist(Playlist playlist, Song song) {
+		MediaStoreUtil.appendToPlaylist(mContext, playlist, song);
 
-                    try {
-                        writeAutoPlaylistConfiguration(playlist);
-                    } catch (IOException e) {
-                        Timber.e(e, "Failed to write autoPlaylist configuration");
-                    }
-                }, throwable -> {
-                    Timber.e(throwable, "makePlaylist: Failed to initialize contents");
-                });
-    }
+		if (mPlaylistContents.containsKey(playlist)) {
+			BehaviorSubject<List<Song>> observableContents = mPlaylistContents.get(playlist);
+			List<Song> updatedContents = new ArrayList<>(observableContents.getValue());
+			updatedContents.add(song);
+			observableContents.onNext(updatedContents);
+		}
+	}
 
-    private void writeAutoPlaylistConfiguration(AutoPlaylist playlist) throws IOException {
-        Gson gson = new GsonBuilder()
-                .setPrettyPrinting()
-                .registerTypeAdapter(AutoPlaylistRule.class, new AutoPlaylistRule.RuleTypeAdapter())
-                .create();
-        FileWriter writer = null;
+	@Override
+	public void addToPlaylist(Playlist playlist, List<Song> songs) {
+		MediaStoreUtil.appendToPlaylist(mContext, playlist, songs);
 
-        try {
-            String filename = playlist.getPlaylistName() + AUTO_PLAYLIST_EXTENSION;
-            String fullPath = mContext.getExternalFilesDir(null) + File.separator + filename;
-
-            writer = new FileWriter(fullPath);
-            writer.write(gson.toJson(playlist, AutoPlaylist.class));
-        } finally {
-            if (writer != null) {
-                writer.close();
-            }
-        }
-    }
-
-    @Override
-    public void addToPlaylist(Playlist playlist, Song song) {
-        MediaStoreUtil.appendToPlaylist(mContext, playlist, song);
-
-        if (mPlaylistContents.containsKey(playlist)) {
-            BehaviorSubject<List<Song>> observableContents = mPlaylistContents.get(playlist);
-            List<Song> updatedContents = new ArrayList<>(observableContents.getValue());
-            updatedContents.add(song);
-            observableContents.onNext(updatedContents);
-        }
-    }
-
-    @Override
-    public void addToPlaylist(Playlist playlist, List<Song> songs) {
-        MediaStoreUtil.appendToPlaylist(mContext, playlist, songs);
-
-        if (mPlaylistContents.containsKey(playlist)) {
-            BehaviorSubject<List<Song>> observableContents = mPlaylistContents.get(playlist);
-            List<Song> updatedContents = new ArrayList<>(observableContents.getValue());
-            updatedContents.addAll(songs);
-            observableContents.onNext(updatedContents);
-        }
-    }
+		if (mPlaylistContents.containsKey(playlist)) {
+			BehaviorSubject<List<Song>> observableContents = mPlaylistContents.get(playlist);
+			List<Song> updatedContents = new ArrayList<>(observableContents.getValue());
+			updatedContents.addAll(songs);
+			observableContents.onNext(updatedContents);
+		}
+	}
 }

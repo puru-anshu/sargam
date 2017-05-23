@@ -29,7 +29,7 @@ import com.arutech.sargam.view.DragDropDecoration;
 import com.arutech.sargam.view.InsetDecoration;
 import com.arutech.sargam.view.QueueAnimator;
 import com.arutech.sargam.view.SnappingScroller;
-import com.trello.rxlifecycle.FragmentEvent;
+import com.trello.rxlifecycle2.android.FragmentEvent;
 
 import java.util.List;
 

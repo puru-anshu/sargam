@@ -13,9 +13,9 @@ import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Properties;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
 public class LocalPlayCountStore implements PlayCountStore {

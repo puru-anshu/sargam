@@ -41,10 +41,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import rx.subjects.BehaviorSubject;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.BehaviorSubject;
 import timber.log.Timber;
 
 public class SearchActivity extends BaseLibraryActivity implements SearchView.OnQueryTextListener {
@@ -86,7 +86,7 @@ public class SearchActivity extends BaseLibraryActivity implements SearchView.On
             lastQuery = "";
         }
 
-        mQueryObservable = BehaviorSubject.create(lastQuery);
+        mQueryObservable = BehaviorSubject.createDefault(lastQuery);
 
         // Set up the RecyclerView's adapter
         mRecyclerView = (RecyclerView) findViewById(R.id.list);

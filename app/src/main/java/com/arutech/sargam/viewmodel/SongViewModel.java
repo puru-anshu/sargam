@@ -4,14 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.databinding.BindingAdapter;
 import android.databinding.ObservableField;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.PopupMenu;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.arutech.sargam.BR;
 import com.arutech.sargam.R;
@@ -26,18 +24,17 @@ import com.arutech.sargam.dialog.AppendPlaylistDialogFragment;
 import com.arutech.sargam.fragments.BaseFragment;
 import com.arutech.sargam.model.Song;
 import com.arutech.sargam.player.PlayerController;
-import com.arutech.sargam.utils.Util;
-import com.bumptech.glide.Glide;
-import com.trello.rxlifecycle.ActivityEvent;
-import com.trello.rxlifecycle.FragmentEvent;
-import com.trello.rxlifecycle.LifecycleTransformer;
+import com.trello.rxlifecycle2.LifecycleTransformer;
+import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.trello.rxlifecycle2.android.FragmentEvent;
+
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import rx.Observable;
-import rx.Subscription;
+import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
 public class SongViewModel extends BaseObservable {
@@ -55,7 +52,7 @@ public class SongViewModel extends BaseObservable {
 	private Activity mActivity;
 	private FragmentManager mFragmentManager;
 	private LifecycleTransformer<?> mLifecycleTransformer;
-	private Subscription mNowPlayingSubscription;
+	private Disposable mNowPlayingSubscription;
 
 	private List<Song> mSongList;
 	private int mIndex;
@@ -116,7 +113,7 @@ public class SongViewModel extends BaseObservable {
 		mReference = songList.get(index);
 
 		if (mNowPlayingSubscription != null) {
-			mNowPlayingSubscription.unsubscribe();
+			mNowPlayingSubscription.dispose();
 		}
 
 		mIsPlaying = false;

@@ -2,15 +2,15 @@ package com.arutech.sargam.lastfm.data.store;
 
 import android.content.Context;
 
-import com.google.gson.Gson;
 import com.arutech.sargam.lastfm.model.LfmArtist;
+import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import rx.Observable;
+import io.reactivex.Observable;
 
 public class DemoLastFmStore implements LastFmStore {
 

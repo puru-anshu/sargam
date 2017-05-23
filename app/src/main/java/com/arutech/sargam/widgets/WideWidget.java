@@ -14,7 +14,7 @@ import com.arutech.sargam.activity.MainActivity;
 import com.arutech.sargam.model.Song;
 import com.arutech.sargam.utils.MediaStyleHelper;
 
-import rx.Observable;
+import io.reactivex.Observable;
 import timber.log.Timber;
 
 import static android.view.KeyEvent.KEYCODE_MEDIA_NEXT;

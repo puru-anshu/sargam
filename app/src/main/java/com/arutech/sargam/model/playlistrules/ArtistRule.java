@@ -15,8 +15,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import rx.Observable;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
+
 
 public class ArtistRule extends AutoPlaylistRule implements Parcelable {
 

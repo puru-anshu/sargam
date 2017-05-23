@@ -33,8 +33,8 @@ public class ArtistViewModel extends BaseObservable {
 	private Context mContext;
 	private FragmentManager mFragmentManager;
 	private Artist mArtist;
-	private int songCount ;
-	private int albumCount;
+	private long songCount;
+	private long albumCount;
 
 	public ArtistViewModel(Context context, FragmentManager fragmentManager) {
 		mContext = context;
@@ -45,18 +45,25 @@ public class ArtistViewModel extends BaseObservable {
 
 	public void setArtist(Artist artist) {
 		mArtist = artist;
-		mMusicStore.getAlbums(mArtist).count().subscribe(ct -> {this.albumCount=ct;},throwable -> {});
-		mMusicStore.getSongs(mArtist).count().subscribe(ct -> {this.songCount=ct;},throwable -> {});
+		mMusicStore.getAlbums(mArtist).count().subscribe(ct -> {
+			this.albumCount = ct;
+		}, throwable -> {
+		});
+		mMusicStore.getSongs(mArtist).count().subscribe(ct -> {
+			this.songCount = ct;
+		}, throwable -> {
+		});
 		notifyChange();
 	}
 
 	public String getName() {
 		return mArtist.getArtistName();
 	}
+
 	@Bindable
 	public String getSoungCount() {
-		String albumNmber = Util.makeLabel(mContext, R.plurals.Nalbums, albumCount);
-		String songCountStr = Util.makeLabel(mContext, R.plurals.Nsongs, songCount);
+		String albumNmber = Util.makeLabel(mContext, R.plurals.Nalbums, (int) albumCount);
+		String songCountStr = Util.makeLabel(mContext, R.plurals.Nsongs, (int) songCount);
 		return Util.makeCombinedString(mContext, albumNmber, songCountStr);
 	}
 

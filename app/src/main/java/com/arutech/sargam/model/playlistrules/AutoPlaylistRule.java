@@ -17,9 +17,11 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.util.List;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 public abstract class AutoPlaylistRule implements Parcelable {
+
 
     public static final int PLAYLIST = 0;
     public static final int SONG = 1;

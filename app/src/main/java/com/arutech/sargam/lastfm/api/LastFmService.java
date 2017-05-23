@@ -2,10 +2,11 @@ package com.arutech.sargam.lastfm.api;
 
 import com.arutech.sargam.lastfm.api.model.LfmArtistResponse;
 
+import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
-import rx.Observable;
+
 
 public interface LastFmService {
 

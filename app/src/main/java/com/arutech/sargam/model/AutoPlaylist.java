@@ -18,9 +18,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
+import static com.arutech.sargam.model.playlistrules.AutoPlaylistRule.DATE_ADDED;
+
 
 public class AutoPlaylist extends Playlist implements Parcelable {
+
 
     /**
      * Value representing an unlimited amount of song entries
@@ -207,7 +211,7 @@ public class AutoPlaylist extends Playlist implements Parcelable {
         switch (field) {
             case AutoPlaylistRule.YEAR:
                 return Song.YEAR_COMPARATOR;
-            case AutoPlaylistRule.DATE_ADDED:
+            case DATE_ADDED:
                 return Song.DATE_ADDED_COMPARATOR;
             case AutoPlaylistRule.DATE_PLAYED:
                 return Song.playDateComparator(playCountStore);

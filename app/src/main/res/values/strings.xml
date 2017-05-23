@@ -255,8 +255,8 @@
     <string name="use_mobile_description_on">Album artwork and other data will always be downloaded</string>
     <string name="use_mobile_description_off">Album artwork and other data will only be downloaded on Wi-Fi</string>
     <string name="enable_additional_logging_detailed">Help make Sargam better by sending anonymous usage data</string>
-    <string name="logging_on">Anonymous usage data and crash information will be sent to Marverenic</string>
-    <string name="logging_off">Only anonymous crash information will be sent to Marverenic</string>
+    <string name="logging_on">Anonymous usage data and crash information will be sent to AruTech</string>
+    <string name="logging_off">Only anonymous crash information will be sent to AruTech</string>
     <string name="logging_description">Help improve Sargam</string>
     <string name="pref_directory_include">Include folders</string>
     <string name="pref_directory_exclude">Exclude folders</string>

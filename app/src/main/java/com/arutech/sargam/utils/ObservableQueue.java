@@ -5,8 +5,9 @@ import android.support.annotation.NonNull;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
-import rx.Observable;
-import rx.subjects.ReplaySubject;
+import io.reactivex.Observable;
+import io.reactivex.subjects.ReplaySubject;
+
 
 /**
  * A data structure that combines a queue with an observable stream. Objects can be enqueued to the
@@ -48,7 +49,7 @@ public class ObservableQueue<T> {
     public Observable<T> toObservable() {
         synchronized (mLock) {
             if (mSubject != null) {
-                mSubject.onCompleted();
+                mSubject.onComplete();
             }
 
             if (mQueue.isEmpty()) {
@@ -65,7 +66,7 @@ public class ObservableQueue<T> {
         return mSubject.map(item -> {
             mQueue.remove();
             return item;
-        }).asObservable();
+        });
     }
 
 }

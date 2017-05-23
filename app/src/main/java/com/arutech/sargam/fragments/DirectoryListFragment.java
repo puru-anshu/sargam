@@ -31,7 +31,7 @@ import com.arutech.sargam.data.store.MusicStore;
 import com.arutech.sargam.data.store.PreferenceStore;
 import com.arutech.sargam.dialog.DirectoryDialogFragment;
 import com.arutech.sargam.view.DividerDecoration;
-import com.tbruyelle.rxpermissions.RxPermissions;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -41,7 +41,7 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
-import rx.Observable;
+import io.reactivex.Observable;
 import timber.log.Timber;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -178,7 +178,7 @@ public class DirectoryListFragment extends Fragment implements View.OnClickListe
             return Observable.just(true);
         }
 
-        return RxPermissions.getInstance(getContext())
+        return new RxPermissions(getActivity())
                 .request(READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE);
     }
 

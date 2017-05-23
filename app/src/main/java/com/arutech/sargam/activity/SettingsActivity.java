@@ -29,7 +29,7 @@ public class SettingsActivity extends BaseActivity {
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.pref_fragment_container, new PreferenceFragment())
+                    .replace(R.id.pref_fragment_container,  new PreferenceFragment())
                     .commit();
         }
     }

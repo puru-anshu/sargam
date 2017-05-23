@@ -3,7 +3,8 @@ package com.arutech.sargam.data.store;
 
 import com.arutech.sargam.model.Song;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 public interface PlayCountStore {
 

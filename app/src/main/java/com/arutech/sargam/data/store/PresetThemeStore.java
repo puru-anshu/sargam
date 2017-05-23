@@ -116,7 +116,7 @@ public class PresetThemeStore implements ThemeStore {
     @Override
     public void setTheme(AppCompatActivity activity) {
         applyNightMode(activity);
-        activity.setTheme(R.style.AppTheme_FullScreen_Light);
+        activity.setTheme(R.style.AppThemeLight);
         activity.getTheme().applyStyle(getPrimaryThemeId(), true);
         activity.getTheme().applyStyle(getAccentThemeId(), true);
 
@@ -145,54 +145,14 @@ public class PresetThemeStore implements ThemeStore {
 
     @StyleRes
     private int getPrimaryThemeId() {
-        switch (mPreferenceStore.getPrimaryColor()) {
-            case PrimaryTheme.GRAY:
-                return R.style.Primary_Grey;
-            case PrimaryTheme.RED:
-                return R.style.Primary_Red;
-            case PrimaryTheme.ORANGE:
-                return R.style.Primary_Orange;
-            case PrimaryTheme.YELLOW:
-                return R.style.Primary_Yellow;
-            case PrimaryTheme.GREEN:
-                return R.style.Primary_Green;
-            case PrimaryTheme.CYAN:
-                return R.style.Primary_Cyan;
-            case PrimaryTheme.BLUE:
-                return R.style.Primary_Blue;
-            case PrimaryTheme.PURPLE:
-                return R.style.Primary_Purple;
-            case PrimaryTheme.BLACK:
-                return R.style.Primary_Black;
-            default:
-                return R.style.Primary_Cyan;
-        }
+
+        return R.style.AppThemeLight;
     }
 
     @StyleRes
     private int getAccentThemeId() {
-        switch (mPreferenceStore.getAccentColor()) {
-            case AccentTheme.GRAY:
-                return R.style.Accent_Grey;
-            case AccentTheme.RED:
-                return R.style.Accent_Red;
-            case AccentTheme.ORANGE:
-                return R.style.Accent_Orange;
-            case AccentTheme.YELLOW:
-                return R.style.Accent_Yellow;
-            case AccentTheme.GREEN:
-                return R.style.Accent_Green;
-            case AccentTheme.CYAN:
-                return R.style.Accent_Cyan;
-            case AccentTheme.BLUE:
-                return R.style.Accent_Blue;
-            case AccentTheme.PURPLE:
-                return R.style.Accent_Purple;
-            case AccentTheme.TEAL:
-                return R.style.Accent_Black;
-            default:
-                return R.style.Accent_Cyan;
-        }
+	    return R.style.AppThemeLight;
+
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)

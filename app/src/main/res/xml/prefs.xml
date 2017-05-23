@@ -10,33 +10,6 @@
             android:entryValues="@array/page_values"
             android:key="@string/pref_key_default_page"
             android:title="Default Page" />
-        <ColorPreference
-            android:defaultValue="5"
-            android:dialogTitle="@string/theme_primary"
-            android:entries="@array/colors"
-            android:entryValues="@array/color_values"
-            app:colorEntries="@array/primary_colors"
-            android:key="@string/pref_key_color_primary"
-            android:title="@string/theme_primary" />
-        <ColorPreference
-            android:defaultValue="5"
-            android:dialogTitle="@string/theme_accent"
-            android:entries="@array/accents"
-            android:entryValues="@array/accent_values"
-            app:colorEntries="@array/accent_colors"
-            android:key="@string/pref_key_color_accent"
-            android:title="@string/theme_accent" />
-        <IntDropDownPreference
-            android:defaultValue="1"
-            android:dialogTitle="@string/theme_base"
-            android:entries="@array/themes"
-            android:entryValues="@array/theme_values"
-            android:key="@string/pref_key_color_base"
-            android:title="@string/theme_base" />
-        <Preference
-            android:defaultValue="false"
-            android:key="@string/pref_key_create_launcher_icon"
-            android:title="@string/add_shortcut" />
     </PreferenceCategoryCompat>
     <PreferenceCategoryCompat android:title="@string/pref_category_library">
         <Preference

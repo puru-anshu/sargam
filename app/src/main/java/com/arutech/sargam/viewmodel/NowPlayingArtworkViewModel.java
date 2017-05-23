@@ -18,14 +18,14 @@ import com.arutech.sargam.player.MusicPlayer;
 import com.arutech.sargam.player.PlayerController;
 import com.arutech.sargam.utils.Util;
 import com.arutech.sargam.view.GestureView;
-import com.trello.rxlifecycle.FragmentEvent;
-import com.trello.rxlifecycle.LifecycleTransformer;
+import com.trello.rxlifecycle2.LifecycleTransformer;
+import com.trello.rxlifecycle2.android.FragmentEvent;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import rx.Observable;
+import io.reactivex.Observable;
 import timber.log.Timber;
 
 

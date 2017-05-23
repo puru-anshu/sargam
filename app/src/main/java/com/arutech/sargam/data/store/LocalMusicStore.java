@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import rx.subjects.BehaviorSubject;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.BehaviorSubject;
 import timber.log.Timber;
 
 public class LocalMusicStore implements MusicStore {
@@ -24,6 +24,8 @@ public class LocalMusicStore implements MusicStore {
     private Context mContext;
     private PreferenceStore mPreferenceStore;
 
+
+	//BehaviourSubject
     private BehaviorSubject<Boolean> mSongLoadingState;
     private BehaviorSubject<Boolean> mArtistLoadingState;
     private BehaviorSubject<Boolean> mAlbumLoadingState;
@@ -38,15 +40,13 @@ public class LocalMusicStore implements MusicStore {
         mContext = context;
         mPreferenceStore = preferenceStore;
 
-        mSongLoadingState = BehaviorSubject.create(false);
-        mAlbumLoadingState = BehaviorSubject.create(false);
-        mArtistLoadingState = BehaviorSubject.create(false);
-        mGenreLoadingState = BehaviorSubject.create(false);
+        mSongLoadingState = BehaviorSubject.createDefault(false);
+        mAlbumLoadingState = BehaviorSubject.createDefault(false);
+        mArtistLoadingState = BehaviorSubject.createDefault(false);
+        mGenreLoadingState = BehaviorSubject.createDefault(false);
+	    bindRefreshListener();
 
-        MediaStoreUtil.waitForPermission()
-                .subscribe(permission -> bindRefreshListener(), throwable -> {
-                    Timber.e(throwable, "Failed to bind refresh listener");
-                });
+
     }
 
     private void bindRefreshListener() {
@@ -74,7 +74,7 @@ public class LocalMusicStore implements MusicStore {
     private void refreshSongs() {
         mSongLoadingState.onNext(true);
 
-        MediaStoreUtil.promptPermission(mContext)
+       Observable.just(true)
                 .observeOn(Schedulers.io())
                 .subscribe(granted -> {
                     if (granted && mSongs != null) {
@@ -89,7 +89,7 @@ public class LocalMusicStore implements MusicStore {
     private void refreshArtists() {
         mArtistLoadingState.onNext(true);
 
-        MediaStoreUtil.promptPermission(mContext)
+       Observable.just(true)
                 .observeOn(Schedulers.io())
                 .subscribe(granted -> {
                     if (granted && mArtists != null) {
@@ -104,7 +104,7 @@ public class LocalMusicStore implements MusicStore {
     private void refreshAlbums() {
         mAlbumLoadingState.onNext(true);
 
-        MediaStoreUtil.promptPermission(mContext)
+	    Observable.just(true)
                 .observeOn(Schedulers.io())
                 .subscribe(granted -> {
                     if (granted && mAlbums != null) {
@@ -119,7 +119,7 @@ public class LocalMusicStore implements MusicStore {
     private void refreshGenres() {
         mGenreLoadingState.onNext(true);
 
-        MediaStoreUtil.promptPermission(mContext)
+	    Observable.just(true)
                 .observeOn(Schedulers.io())
                 .subscribe(granted -> {
                     if (granted && mGenres != null) {
@@ -148,7 +148,7 @@ public class LocalMusicStore implements MusicStore {
 
         BehaviorSubject<Boolean> result = BehaviorSubject.create();
 
-        MediaStoreUtil.promptPermission(mContext)
+	    Observable.just(true)
                 .observeOn(Schedulers.io())
                 .map(granted -> {
                     if (granted) {
@@ -174,7 +174,7 @@ public class LocalMusicStore implements MusicStore {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result);
 
-        return result.asObservable();
+        return result;
     }
 
     @Override
@@ -192,7 +192,7 @@ public class LocalMusicStore implements MusicStore {
             mSongs = BehaviorSubject.create();
             mSongLoadingState.onNext(true);
 
-            MediaStoreUtil.getPermission(mContext)
+	        Observable.just(true)
                     .observeOn(Schedulers.io())
                     .subscribe(granted -> {
                         if (granted) {
@@ -205,7 +205,7 @@ public class LocalMusicStore implements MusicStore {
                         Timber.e(throwable, "Failed to query MediaStore for songs");
                     });
         }
-        return mSongs.asObservable().observeOn(AndroidSchedulers.mainThread());
+        return mSongs.observeOn(AndroidSchedulers.mainThread());
     }
 
     private List<Song> getAllSongs() {
@@ -277,7 +277,7 @@ public class LocalMusicStore implements MusicStore {
             mAlbums = BehaviorSubject.create();
             mAlbumLoadingState.onNext(true);
 
-            MediaStoreUtil.getPermission(mContext)
+	        Observable.just(true)
                     .flatMap(granted -> {
                         if (noDirectoryFilters()) {
                             return Observable.just(granted);
@@ -297,7 +297,7 @@ public class LocalMusicStore implements MusicStore {
                         Timber.e(throwable, "Failed to query MediaStore for albums");
                     });
         }
-        return mAlbums.asObservable().observeOn(AndroidSchedulers.mainThread());
+        return mAlbums.observeOn(AndroidSchedulers.mainThread());
     }
 
     private List<Album> getAllAlbums() {
@@ -310,7 +310,7 @@ public class LocalMusicStore implements MusicStore {
             mArtists = BehaviorSubject.create();
             mArtistLoadingState.onNext(true);
 
-            MediaStoreUtil.getPermission(mContext)
+	        Observable.just(true)
                     .flatMap(granted -> {
                         if (noDirectoryFilters()) {
                             return Observable.just(granted);
@@ -330,7 +330,7 @@ public class LocalMusicStore implements MusicStore {
                         Timber.e(throwable, "Failed to query MediaStore for artists");
                     });
         }
-        return mArtists.asObservable().observeOn(AndroidSchedulers.mainThread());
+        return mArtists.observeOn(AndroidSchedulers.mainThread());
     }
 
     private List<Artist> getAllArtists() {
@@ -343,7 +343,7 @@ public class LocalMusicStore implements MusicStore {
             mGenres = BehaviorSubject.create();
             mGenreLoadingState.onNext(true);
 
-            MediaStoreUtil.getPermission(mContext)
+	        Observable.just(true)
                     .observeOn(Schedulers.io())
                     .subscribe(granted -> {
                         if (granted) {
@@ -356,7 +356,7 @@ public class LocalMusicStore implements MusicStore {
                         Timber.e(throwable, "Failed to query MediaStore for genres");
                     });
         }
-        return mGenres.asObservable().observeOn(AndroidSchedulers.mainThread());
+        return mGenres.observeOn(AndroidSchedulers.mainThread());
     }
 
     private List<Genre> getAllGenres() {

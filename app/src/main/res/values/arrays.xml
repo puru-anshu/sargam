@@ -39,15 +39,13 @@
         <item>7</item>
     </string-array>
     <integer-array name="primary_colors">
-        <item>@color/primary_grey</item>
-        <item>@color/primary_red</item>
-        <item>@color/primary_orange</item>
-        <item>@color/primary_yellow</item>
-        <item>@color/primary_green</item>
-        <item>@color/primary</item>
-        <item>@color/primary_blue</item>
-        <item>@color/primary_purple</item>
-        <item>@color/primary_black</item>
+        <item>@color/blue_light</item>
+        <item>@color/green_light</item>
+        <item>@color/grey_light</item>
+        <item>@color/purple_light</item>
+        <item>@color/red_light</item>
+        <item>@color/yellow_light</item>
+        <item>@color/white_pure</item>
     </integer-array>
     <string-array name="accents">
         <item>Grey</item>

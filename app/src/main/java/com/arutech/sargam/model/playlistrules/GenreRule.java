@@ -13,8 +13,9 @@ import com.arutech.sargam.model.Song;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.Observable;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.schedulers.Schedulers;
+
 
 public class GenreRule extends AutoPlaylistRule implements Parcelable {
 
@@ -29,7 +30,9 @@ public class GenreRule extends AutoPlaylistRule implements Parcelable {
     @Override
     public Observable<List<Song>> applyFilter(PlaylistStore playlistStore, MusicStore musicStore,
                                               PlayCountStore playCountStore) {
-        return musicStore.getGenres()
+
+	    //todo
+	    return musicStore.getGenres()
                 .observeOn(Schedulers.computation())
                 .take(1)
                 .map(library -> {
@@ -42,13 +45,13 @@ public class GenreRule extends AutoPlaylistRule implements Parcelable {
 
                     return filtered;
                 })
-                .flatMap(Observable::from)
+                .flatMap(Observable::fromIterable)
                 .concatMap(musicStore::getSongs)
                 .reduce((songs, songs2) -> {
                     List<Song> merged = new ArrayList<>(songs);
                     merged.addAll(songs2);
                     return merged;
-                });
+                }).toObservable();
     }
 
     @SuppressLint("SwitchIntDef")

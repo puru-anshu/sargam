@@ -40,7 +40,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
 import static android.view.WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE;
@@ -59,7 +59,7 @@ public class RuleViewModel extends BaseObservable {
 
     private FilterAdapter mFilterAdapter;
     private ValueAdapter<?> mValueAdapter;
-    private Subscription mValueSubscription;
+    private Disposable mValueSubscription;
 
     private OnRemovalListener mRemovalListener;
     private List<AutoPlaylistRule> mRules;
@@ -197,7 +197,7 @@ public class RuleViewModel extends BaseObservable {
 
     private void setupValueAdapter() {
         if (mValueSubscription != null) {
-            mValueSubscription.unsubscribe();
+            mValueSubscription.dispose();
         }
 
         if (getValueSpinnerVisibility() != View.VISIBLE) {

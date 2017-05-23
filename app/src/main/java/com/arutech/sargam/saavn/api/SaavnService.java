@@ -10,10 +10,11 @@ import com.google.gson.internal.LinkedTreeMap;
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Query;
-import rx.Observable;
+
 
 public interface SaavnService {
 

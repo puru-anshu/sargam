@@ -8,7 +8,8 @@ import com.arutech.sargam.model.Song;
 
 import java.util.List;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 public interface PlaylistStore {
 

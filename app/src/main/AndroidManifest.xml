@@ -16,14 +16,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.FullScreen.Light">
+        android:theme="@style/AppThemeLight">
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="ddc26900ef56df7a12f799c5b1f391bf408b8d45"/>
 
         <activity
             android:name=".activity.MainActivity"
-            android:theme="@style/AppThemeNormalLight"
+            android:theme="@style/AppThemeLight"
             android:windowSoftInputMode="adjustPan|adjustNothing"/>
 
         <activity-alias
