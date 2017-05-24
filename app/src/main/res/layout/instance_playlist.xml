@@ -17,7 +17,7 @@
         android:background="@{viewModel.backgroundColor}"
         android:foreground="?android:attr/selectableItemBackground"
         android:onClick="@{viewModel.onClickPlaylist()}"
-        tools:background="@color/green_transparent">
+        tools:background="@color/blue_light">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -27,18 +27,18 @@
                 android:id="@+id/album_art"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="@android:color/black"
+                android:background="@android:color/white"
                 android:contentDescription="@string/description_album_art"
                 android:src="@{viewModel.artistImage}"
                 app:layout_constraintDimensionRatio="h,1:1"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/music_circle_white"/>
+                app:srcCompat="@drawable/ic_empty_music2"/>
 
             <TextView
                 android:id="@+id/playlist_name"
-                style="@style/TextApperance.Album.Title"
+                style="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -50,7 +50,6 @@
                 android:paddingTop="@dimen/grid_padding"
                 android:textColor="@{viewModel.titleTextColor}"
                 android:text="@{viewModel.name}"
-                android:textSize="20sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/playlist_auto_indicator"
                 app:layout_constraintTop_toBottomOf="@+id/album_art"
@@ -60,7 +59,7 @@
                 android:id="@+id/album_detail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                style="@style/Base.TextAppearance.AppCompat.Widget.ActionMode.Subtitle"
+                style="@style/TextAppearance.AppCompat.Body1"
                 android:textColor="@{viewModel.subTitleTextColor}"
                 android:text="@{viewModel.numSong}"
                 android:ellipsize="end"
@@ -71,7 +70,6 @@
                 android:paddingRight="0dp"
                 android:paddingEnd="0dp"
                 tools:text="Artist Name"
-                android:textSize="13sp"
                 app:layout_constraintTop_toBottomOf="@+id/playlist_name"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -85,16 +83,16 @@
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/playlist_menu"
                 android:layout_toStartOf="@+id/playlist_menu"
-                android:alpha="0.5"
                 android:padding="4dp"
                 android:scaleType="center"
+                android:background="?selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_filter_24dp"
-                android:tint="@color/widget_secondary_text"
+                android:tint="@color/white_pure"
                 android:visibility="@{viewModel.smartIndicatorVisibility}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintRight_toLeftOf="@+id/playlist_menu"
                 app:layout_constraintTop_toBottomOf="@+id/album_art"
-                tools:tint="?iconColor"/>
+                />
 
 
             <ImageView

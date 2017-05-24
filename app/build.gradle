@@ -12,8 +12,10 @@ apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'io.fabric'
 
 
+
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 
@@ -86,6 +88,8 @@ dependencies {
     compile 'com.jakewharton.timber:timber:4.1.2'
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.takisoft.fix:preference-v7:25.3.1.0'
+    compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     testCompile 'junit:junit:4.12'
+
 
 }

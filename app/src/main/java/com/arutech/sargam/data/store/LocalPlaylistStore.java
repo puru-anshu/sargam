@@ -105,6 +105,7 @@ public class LocalPlaylistStore implements PlaylistStore {
 
 	@Override
 	public Observable<List<Song>> getSongs(Playlist playlist) {
+		Timber.i("Fetching playlist songs for %s", playlist.getPlaylistName());
 		if (playlist instanceof AutoPlaylist) {
 			return getAutoPlaylistSongs((AutoPlaylist) playlist);
 		} else {
@@ -131,21 +132,14 @@ public class LocalPlaylistStore implements PlaylistStore {
 		if (mPlaylistContents.containsKey(playlist)) {
 			subject = mPlaylistContents.get(playlist);
 		} else {
-			subject = BehaviorSubject.create();
+			subject = BehaviorSubject.createDefault(Collections.emptyList());
 			mPlaylistContents.put(playlist, subject);
-
 			playlist.generatePlaylist(mMusicStore, this, mPlayCountStore)
 					.subscribe(subject::onNext, subject::onError);
-
-			subject.observeOn(Schedulers.io())
-					.subscribe(contents -> {
-						editPlaylist(playlist, contents);
-					}, throwable -> {
-						Timber.e(throwable, "Failed to save playlist contents");
-					});
 		}
 
 		return subject.observeOn(AndroidSchedulers.mainThread());
+
 	}
 
 	@Override

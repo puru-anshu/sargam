@@ -23,6 +23,7 @@ import com.arutech.sargam.view.BackgroundDecoration;
 import com.arutech.sargam.view.DividerDecoration;
 import com.arutech.sargam.view.GridSpacingDecoration;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -60,7 +61,7 @@ public class PlaylistFragment extends BaseFragment {
 
 		View view = inflater.inflate(R.layout.fragment_library_page, container, false);
 		mRecyclerView = (RecyclerView) view.findViewById(R.id.library_page_list);
-		int numColumns = ViewUtils.getNumberOfGridColumns(getActivity(),  R.dimen.grid_width);
+		int numColumns = ViewUtils.getNumberOfGridColumns(getActivity(), R.dimen.grid_width);
 
 		GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), numColumns);
 		layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -80,6 +81,7 @@ public class PlaylistFragment extends BaseFragment {
 				new DividerDecoration(getActivity(), R.id.instance_blank, R.id.empty_layout));
 
 		if (mAdapter == null) {
+			if (null == mPlaylists) mPlaylists = Collections.emptyList();
 			setupAdapter();
 		} else {
 			mRecyclerView.setAdapter(mAdapter);

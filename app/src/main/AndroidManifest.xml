@@ -17,6 +17,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeLight">
+        <meta-data android:name="AA_DB_NAME"  android:value="sargam.db" />
+        <meta-data  android:name="AA_DB_VERSION" android:value="2" />
+
+
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="ddc26900ef56df7a12f799c5b1f391bf408b8d45"/>
@@ -234,12 +239,6 @@
             </intent-filter>
         </activity>
 
-        <!-- Broadcast Receivers -->
-        <receiver android:name="android.support.v4.media.session.MediaButtonReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.MEDIA_BUTTON"/>
-            </intent-filter>
-        </receiver>
 
         <service
             android:name=".player.PlayerService"

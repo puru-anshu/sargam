@@ -15,6 +15,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 
 public class PlaylistRule extends AutoPlaylistRule implements Parcelable {
@@ -46,6 +47,7 @@ public class PlaylistRule extends AutoPlaylistRule implements Parcelable {
 				.flatMap(Observable::fromIterable)
 				.concatMap(playlistStore::getSongs)
 				.reduce((songs, songs2) -> {
+					Timber.i("Songs size %d and %d ", songs.size(), songs2.size());
 					List<Song> merged = new ArrayList<>(songs);
 					merged.addAll(songs2);
 					return merged;

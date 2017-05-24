@@ -111,7 +111,7 @@ public class PlaylistViewModel extends BaseObservable {
 
 		title.set(ResourcesCompat.getColor(res, R.color.grid_text, theme));
 		artist.set(ResourcesCompat.getColor(res, R.color.grid_detail_text, theme));
-		background.set(ResourcesCompat.getColor(res, R.color.white_translucent, theme));
+		background.set(ResourcesCompat.getColor(res, R.color.blue_light, theme));
 	}
 
 	public ObservableInt getTitleTextColor() {

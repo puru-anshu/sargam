@@ -3,12 +3,12 @@ package com.arutech.sargam.data.inject;
 import android.content.Context;
 
 import com.arutech.sargam.data.store.LocalMusicStore;
-import com.arutech.sargam.data.store.LocalPlayCountStore;
 import com.arutech.sargam.data.store.LocalPlaylistStore;
 import com.arutech.sargam.data.store.MusicStore;
 import com.arutech.sargam.data.store.PlayCountStore;
 import com.arutech.sargam.data.store.PlaylistStore;
 import com.arutech.sargam.data.store.PreferenceStore;
+import com.arutech.sargam.data.store.RealmPlayCountStrore;
 
 import javax.inject.Singleton;
 
@@ -34,6 +34,6 @@ public class MediaStoreModule {
     @Provides
     @Singleton
     public PlayCountStore providePlayCountStore(Context context) {
-        return new LocalPlayCountStore(context);
+        return new RealmPlayCountStrore(context);
     }
 }

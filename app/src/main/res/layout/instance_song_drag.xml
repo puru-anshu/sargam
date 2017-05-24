@@ -22,13 +22,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_reorder_24dp"
-            android:padding="8dp"
-            android:alpha="0.5"
+            android:padding="2dp"
+            android:alpha="0.6"
             android:tint="@color/widget_secondary_text"
             tools:tint="@android:color/darker_gray"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ImageView
+            android:id="@+id/albumArt"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            app:albumArt="@{viewModel.albumId}"
+            app:layout_constraintRight_toLeftOf="@+id/song_name"
+            app:layout_constraintLeft_toRightOf="@+id/handle"
+            android:padding="4dp"/>
 
         <TextView
             android:id="@+id/song_name"
@@ -46,7 +55,7 @@
             app:layout_constraintBottom_toTopOf="@+id/song_detail"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
-            app:layout_constraintLeft_toRightOf="@+id/handle"/>
+            app:layout_constraintLeft_toRightOf="@+id/albumArt"/>
 
         <TextView
             android:id="@+id/song_detail"
@@ -63,7 +72,7 @@
             app:layout_constraintRight_toLeftOf="@+id/instancePlayingIndicator"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/song_name"
-            app:layout_constraintLeft_toRightOf="@+id/handle"/>
+            app:layout_constraintLeft_toRightOf="@+id/albumArt"/>
 
         <com.arutech.sargam.widgets.MusicVisualizer
             android:id="@+id/instancePlayingIndicator"
