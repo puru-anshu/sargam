@@ -245,7 +245,7 @@ public class MainActivity extends BaseLibraryActivity implements View.OnClickLis
 				startActivity(SearchActivity.newIntent(this));
 				return true;
 			case R.id.menu_library_download:
-				startActivity(DownloadActivity.newIntent(this));
+				startActivity(WebActivity.newIntent(this));
 				return true;
 			case R.id.menu_library_about:
 				startActivity(AboutActivity.newIntent(this));

@@ -8,7 +8,7 @@
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/menu_library_download"
-        android:icon="@drawable/ic_file_download_white_24dp"
+        android:icon="@drawable/ic_browse_music"
         android:title="Download Songs"
         app:showAsAction="ifRoom" />
     <item

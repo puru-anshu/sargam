@@ -183,6 +183,9 @@
             android:name=".activity.instance.AlbumActivity"
             android:windowSoftInputMode="adjustPan|adjustNothing"/>
         <activity
+            android:name=".activity.instance.TrackGroupActivity"
+            android:windowSoftInputMode="adjustPan|adjustNothing"/>
+        <activity
             android:name=".activity.instance.ArtistActivity"
             android:windowSoftInputMode="adjustPan|adjustNothing"/>
         <activity
@@ -227,6 +230,10 @@
         <!-- About Activity -->
         <activity android:name=".activity.AboutActivity"/>
 
+        <activity android:name=".activity.WebActivity">
+        </activity>
+        <activity android:name=".activity.WebSearchActivity">
+        </activity>
         <!-- Settings Activity -->
         <activity
             android:name=".activity.SettingsActivity"
@@ -305,8 +312,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.DownloadActivity">
-        </activity>
+
     </application>
 
 </manifest>

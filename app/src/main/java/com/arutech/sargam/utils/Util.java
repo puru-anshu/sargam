@@ -15,11 +15,19 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.util.Base64;
 
 import com.arutech.sargam.R;
 import com.arutech.sargam.model.Song;
+import com.arutech.sargam.saavn.api.model.Track;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 
 import timber.log.Timber;
 
@@ -33,6 +41,7 @@ public final class Util {
 	 * added in API level 18.
 	 */
 	private static final UUID EQUALIZER_UUID;
+	public static final String TRANSFORMATION = "DES/ECB/PKCS5Padding";
 
 	static {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
@@ -125,9 +134,10 @@ public final class Util {
 	}
 
 	public static Bitmap fetchFullArt(Context context, Song song) {
-		if (song == null) {
+		if (song == null || !song.isInLibrary()) {
 			return null;
 		}
+
 
 		MediaMetadataRetriever retriever = new MediaMetadataRetriever();
 
@@ -190,6 +200,7 @@ public final class Util {
 			return Color.WHITE;
 		} else return Color.BLACK;
 	}
+
 	public static String getAlbumArtForFile(String filePath) {
 		MediaMetadataRetriever mmr = new MediaMetadataRetriever();
 		mmr.setDataSource(filePath);
@@ -207,7 +218,6 @@ public final class Util {
 	                                     final int number) {
 		return context.getResources().getQuantityString(pluralInt, number, number);
 	}
-
 
 
 	public static Bitmap fastblur(Bitmap sentBitmap, float scale, int radius) {
@@ -366,7 +376,7 @@ public final class Util {
 			stackpointer = radius;
 			for (y = 0; y < h; y++) {
 				// Preserve alpha channel: ( 0xff000000 & pix[yi] )
-				pix[yi] = ( 0xff000000 & pix[yi] ) | ( dv[rsum] << 16 ) | ( dv[gsum] << 8 ) | dv[bsum];
+				pix[yi] = (0xff000000 & pix[yi]) | (dv[rsum] << 16) | (dv[gsum] << 8) | dv[bsum];
 
 				rsum -= routsum;
 				gsum -= goutsum;
@@ -414,6 +424,54 @@ public final class Util {
 		bitmap.setPixels(pix, 0, w, 0, 0, w, h);
 
 		return (bitmap);
+	}
+
+	public static Uri decryptSaavn(String encryptedMediaUrl) {
+		try {
+			byte[] data = Base64.decode(encryptedMediaUrl, 0);
+			Cipher cipher = Cipher.getInstance(TRANSFORMATION);
+			cipher.init(2, new SecretKeySpec(getKeyString().getBytes(), "DES"));
+			byte[] bytes = cipher.doFinal(data);
+			return Uri.parse(new String(bytes));
+		} catch (Exception e) {
+			Timber.e(e, "Error in decoding songurl");
+		}
+
+		return Uri.EMPTY;
+	}
+
+	@NonNull
+	private static String getKeyString() {
+		return "38346591";
+	}
+
+	@android.support.annotation.NonNull
+	public static List<Song> getSongsFromTracks(List<Track> trackList) {
+		List<Song> songList = new ArrayList<Song>();
+
+		int tNum = 0;
+		for (Track track : trackList) {
+
+			Song song = new Song.Builder()
+					.setSongId(track.getId().hashCode())
+					.setSongName(track.getTitle())
+					.setAlbumName(track.getMoreInfo().getAlbum())
+					.setAlbumId(Long.parseLong(track.getMoreInfo().getAlbumId()))
+					.setArtWork(track.getImage()).setTrackNumber(tNum++)
+					.setInLibrary(false)
+					.setLocation(getLocation(track))
+					.setArtistName(track.getMoreInfo().getArtistMap().toString())
+					.build();
+			songList.add(song);
+
+		}
+		return songList;
+	}
+
+	private static Uri getLocation(Track track) {
+		String encryptedMediaUrl = track.getMoreInfo().getEncryptedMediaUrl();
+		return decryptSaavn(encryptedMediaUrl);
+
 	}
 
 }

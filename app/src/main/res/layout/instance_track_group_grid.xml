@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.arutech.sargam.viewmodel.web.TrackGroupViewModel"/>
+    </data>
+
+    <FrameLayout
+        android:id="@+id/album_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:onClick="@{viewModel.onClickGroup()}"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/album_art"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_alignParentLeft="true"
+                android:background="@android:color/black"
+                android:contentDescription="@string/description_album_art"
+                android:src="@{viewModel.artistImage}"
+                app:srcCompat="@drawable/ic_empty_music2"/>
+
+            <TextView
+                android:id="@+id/album_title"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/album_art"
+                android:layout_toEndOf="@id/album_art"
+                android:layout_toLeftOf="@id/album_menu"
+                android:layout_toStartOf="@id/album_menu"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingEnd="0dp"
+                android:paddingLeft="@dimen/grid_padding"
+                android:paddingRight="0dp"
+                android:text="@{viewModel.albumTitle}"
+                android:textColor="@color/widget_primary_text"
+                android:textSize="16sp"
+
+                tools:text="Album Name"/>
+
+            <TextView
+                android:id="@+id/album_detail"
+                style="@style/TextAppearance.AppCompat.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/album_title"
+                android:layout_toRightOf="@id/album_art"
+                android:layout_toEndOf="@id/album_art"
+                android:layout_toLeftOf="@id/album_menu"
+                android:layout_toStartOf="@id/album_menu"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingBottom="@dimen/grid_padding"
+                android:paddingEnd="0dp"
+                android:paddingLeft="@dimen/grid_padding"
+                android:paddingRight="0dp"
+                android:paddingStart="@dimen/grid_padding"
+                android:text="@{viewModel.albumArtist}"
+                android:textColor="@color/widget_secondary_text"
+                android:textSize="13sp"
+                tools:text="Artist Name"/>
+
+            <ImageView
+                android:id="@+id/album_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="?selectableItemBackgroundBorderless"
+                android:onClick="@{viewModel.onClickMenu()}"
+                android:padding="@dimen/grid_padding"
+                android:src="@drawable/ic_menu_24dp"
+                android:tint="@color/accent"
+                />
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
+</layout>

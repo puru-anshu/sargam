@@ -135,13 +135,13 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
 		// If the theme was changed since this Activity was created, or the automatic day/night
 		// theme has changed state, recreate this activity
-		_mThemeStore.setTheme(this);
-		boolean primaryDiff = mPrimaryColor != _mPreferenceStore.getPrimaryColor();
-		boolean accentDiff = mAccentColor != _mPreferenceStore.getAccentColor();
-
-		if (primaryDiff || accentDiff) {
-			recreate();
-		}
+//		_mThemeStore.setTheme(this);
+//		boolean primaryDiff = mPrimaryColor != _mPreferenceStore.getPrimaryColor();
+//		boolean accentDiff = mAccentColor != _mPreferenceStore.getAccentColor();
+//
+//		if (primaryDiff || accentDiff) {
+//			recreate();
+//		}
 	}
 
 	/**

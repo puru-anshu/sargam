@@ -4,13 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="48dp"
     android:paddingLeft="16dp"
-    android:paddingRight="16dp">
+    android:paddingRight="16dp"
+    android:background="@color/background_elevated">
 
     <TextView
         android:id="@+id/subheader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Preference_TextAppearanceMaterialSubhead"
+        style="@style/TextAppearance.AppCompat.Subhead"
         android:maxLines="1"
         android:ellipsize="end"
         android:textSize="14sp"

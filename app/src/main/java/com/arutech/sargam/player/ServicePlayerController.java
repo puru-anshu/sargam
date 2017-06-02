@@ -19,6 +19,7 @@ import com.arutech.sargam.model.Song;
 import com.arutech.sargam.utils.ObservableQueue;
 import com.arutech.sargam.utils.Optional;
 import com.arutech.sargam.utils.Util;
+import com.bumptech.glide.Glide;
 
 import java.util.Collections;
 import java.util.List;
@@ -522,6 +523,11 @@ public class ServicePlayerController implements PlayerController {
 					.map((Song song) -> {
 						if (song == null) {
 							return null;
+						}
+						if (!song.isInLibrary()) {
+							Bitmap bitmap = Glide.with(mContext)
+									.load(song.getArtWork()).asBitmap().into(100, 100).get();
+							return bitmap;
 						}
 
 						return Util.fetchFullArt(mContext, song);

@@ -10,21 +10,14 @@
         <item name="windowBackground">@color/widget_background</item>
     </style>
 
-
-    <style name="ActionBarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="MySearchViewStyle" parent="Widget.AppCompat.Light.SearchView">
     </style>
+
+
 
     <style name="AppThemeLight" parent="ThemeBaseLight">
     </style>
 
-    <style name="PopupTheme" parent="ThemeOverlay.AppCompat">
-        <item name="android:colorBackground">@color/grey_material</item>
-
-    </style>
-
-    <style name="PopupThemeLight" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:colorBackground">@color/grey_light_mega_ultra</item>
-    </style>
 
 
     <style name="TextApperance.Album.Title" parent="@style/TextAppearance.AppCompat.Large">

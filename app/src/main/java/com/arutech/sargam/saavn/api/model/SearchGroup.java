@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by anshuman on 08/05/17.
  */
-public class TrackSearch {
+public class SearchGroup {
 
 	@SerializedName("total")
 	@Expose
@@ -19,7 +19,7 @@ public class TrackSearch {
 	private Integer start;
 	@SerializedName("results")
 	@Expose
-	private List<Track> results = null;
+	private List<TrackGroup> results = null;
 
 	public Integer getTotal() {
 		return total;
@@ -37,11 +37,11 @@ public class TrackSearch {
 		this.start = start;
 	}
 
-	public List<Track> getResults() {
+	public List<TrackGroup> getResults() {
 		return results != null ? results : Collections.emptyList();
 	}
 
-	public void setResults(List<Track> results) {
+	public void setResults(List<TrackGroup> results) {
 		this.results = results;
 	}
 }

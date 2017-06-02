@@ -375,10 +375,16 @@
 
     <string name="count_song"><xliff:g id="count">%d</xliff:g> song</string>
     <string name="count_songs"><xliff:g id="count">%d</xliff:g> songs</string>
-    <string name="count_album"><xliff:g id="count">%d</xliff:g> songs</string>
-    <string name="count_albums"><xliff:g id="count">%d</xliff:g> album</string>
+    <string name="count_album"><xliff:g id="count">%d</xliff:g> album</string>
+    <string name="count_albums"><xliff:g id="count">%d</xliff:g> albums</string>
     <string name="count_artist"><xliff:g id="count">%d</xliff:g> artist</string>
     <string name="count_artists"><xliff:g id="count">%d</xliff:g> artists</string>
+    <string name="action_download_song">Download Song</string>
+    <string name="action_download_all">Download All</string>
+    <string name="header_top_songs">Top Songs</string>
+    <string name="header_top_playlist">Top Playlists</string>
+    <string name="header_new_releases">New Releases</string>
+    <string name="header_web">Online Songs</string>
 
 
 </resources>

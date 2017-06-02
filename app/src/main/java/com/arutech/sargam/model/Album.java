@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 
 import com.arutech.sargam.R;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -165,7 +166,8 @@ public final class Album implements Parcelable, Comparable<Album> {
         return compareTitle(getAlbumName(), another.getAlbumName());
     }
 
-    public static class Builder {
+
+	public static class Builder {
 
         private long albumId;
         private String albumName;

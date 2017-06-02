@@ -6,144 +6,216 @@ import com.google.gson.annotations.SerializedName;
 
 public class TrackGroup {
 
-    @SerializedName("id")
-    @Expose
-    private String id;
-    @SerializedName("title")
-    @Expose
-    private String title;
-    @SerializedName("type")
-    @Expose
-    private String type;
-    @SerializedName("perma_url")
-    @Expose
-    private String permaUrl;
-    @SerializedName("image")
-    @Expose
-    private String image;
-    @SerializedName("language")
-    @Expose
-    private String language;
-    @SerializedName("year")
-    @Expose
-    private String year;
-    @SerializedName("play_count")
-    @Expose
-    private String playCount;
-    @SerializedName("explicit_content")
-    @Expose
-    private String explicitContent;
-    @SerializedName("list_count")
-    @Expose
-    private String listCount;
-    @SerializedName("list_type")
-    @Expose
-    private String listType;
+	@SerializedName("id")
+	@Expose
+	private String id;
+	@SerializedName("title")
+	@Expose
+	private String title;
+	@SerializedName("type")
+	@Expose
+	private String type;
+	@SerializedName("perma_url")
+	@Expose
+	private String permaUrl;
+	@SerializedName("image")
+	@Expose
+	private String image;
+	@SerializedName("language")
+	@Expose
+	private String language;
+	@SerializedName("year")
+	@Expose
+	private String year;
+	@SerializedName("play_count")
+	@Expose
+	private String playCount;
+	@SerializedName("explicit_content")
+	@Expose
+	private String explicitContent;
+	@SerializedName("list_count")
+	@Expose
+	private String listCount;
+	@SerializedName("list_type")
+	@Expose
+	private String listType;
 
-    public String getId() {
-        return id;
-    }
+	@SerializedName("more_info")
+	@Expose
+	private ExtraInfo moreInfo;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public String getType() {
-        return type;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public void setType(String type) {
-        this.type = type;
-    }
+	public String getType() {
+		return type;
+	}
 
-    public String getPermaUrl() {
-        return permaUrl;
-    }
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    public void setPermaUrl(String permaUrl) {
-        this.permaUrl = permaUrl;
-    }
+	public String getPermaUrl() {
+		return permaUrl;
+	}
 
-    public String getImage() {
-        return image;
-    }
+	public void setPermaUrl(String permaUrl) {
+		this.permaUrl = permaUrl;
+	}
 
-    public void setImage(String image) {
-        this.image = image;
-    }
+	public String getImage() {
+		return image;
+	}
 
-    public String getLanguage() {
-        return language;
-    }
+	public void setImage(String image) {
+		this.image = image;
+	}
 
-    public void setLanguage(String language) {
-        this.language = language;
-    }
+	public String getLanguage() {
+		return language;
+	}
 
-    public String getYear() {
-        return year;
-    }
+	public void setLanguage(String language) {
+		this.language = language;
+	}
 
-    public void setYear(String year) {
-        this.year = year;
-    }
+	public String getYear() {
+		return year;
+	}
 
-    public String getPlayCount() {
-        return playCount;
-    }
+	public void setYear(String year) {
+		this.year = year;
+	}
 
-    public void setPlayCount(String playCount) {
-        this.playCount = playCount;
-    }
+	public String getPlayCount() {
+		return playCount;
+	}
 
-    public String getExplicitContent() {
-        return explicitContent;
-    }
+	public void setPlayCount(String playCount) {
+		this.playCount = playCount;
+	}
 
-    public void setExplicitContent(String explicitContent) {
-        this.explicitContent = explicitContent;
-    }
+	public String getExplicitContent() {
+		return explicitContent;
+	}
 
-    public String getListCount() {
-        return listCount;
-    }
+	public void setExplicitContent(String explicitContent) {
+		this.explicitContent = explicitContent;
+	}
 
-    public void setListCount(String listCount) {
-        this.listCount = listCount;
-    }
+	public String getListCount() {
+		return listCount;
+	}
 
-    public String getListType() {
-        return listType;
-    }
+	public void setListCount(String listCount) {
+		this.listCount = listCount;
+	}
 
-    public void setListType(String listType) {
-        this.listType = listType;
-    }
+	public String getListType() {
+		return listType;
+	}
+
+	public void setListType(String listType) {
+		this.listType = listType;
+	}
+
+	public ExtraInfo getMoreInfo() {
+		return moreInfo;
+	}
+
+	public void setMoreInfo(ExtraInfo moreInfo) {
+		this.moreInfo = moreInfo;
+	}
+
+	@Override
+	public String toString() {
+		return "TrackGroup{" +
+				"id='" + id + '\'' +
+				", title='" + title + '\'' +
+				", type='" + type + '\'' +
+				", permaUrl='" + permaUrl + '\'' +
+				", image='" + image + '\'' +
+				", language='" + language + '\'' +
+				", year='" + year + '\'' +
+				", playCount='" + playCount + '\'' +
+				", explicitContent='" + explicitContent + '\'' +
+				", listCount='" + listCount + '\'' +
+				", listType='" + listType + '\'' +
+				'}';
+	}
 
 
+	public String getDescription() {
+		if (null != moreInfo) return moreInfo.toString();
+		return "";
+	}
 
-    @Override
-    public String toString() {
-        return "TrackGroup{" +
-                "id='" + id + '\'' +
-                ", title='" + title + '\'' +
-                ", type='" + type + '\'' +
-                ", permaUrl='" + permaUrl + '\'' +
-                ", image='" + image + '\'' +
-                ", language='" + language + '\'' +
-                ", year='" + year + '\'' +
-                ", playCount='" + playCount + '\'' +
-                ", explicitContent='" + explicitContent + '\'' +
-                ", listCount='" + listCount + '\'' +
-                ", listType='" + listType + '\'' +
-                '}';
-    }
+	private class ExtraInfo
+
+	{
+		@SerializedName("music")
+		String music;
+		@SerializedName("song_count")
+		String songCount;
+		@SerializedName("firstname")
+		String firstname;
+		@SerializedName("language")
+		String language;
+
+
+		public String getMusic() {
+			return music;
+		}
+
+		public void setMusic(String music) {
+			this.music = music;
+		}
+
+		public String getSongCount() {
+			return songCount;
+		}
+
+		public void setSongCount(String songCount) {
+			this.songCount = songCount;
+		}
+
+		public String getFirstname() {
+			return firstname;
+		}
+
+		public void setFirstname(String firstname) {
+			this.firstname = firstname;
+		}
+
+		public String getLanguage() {
+			return language;
+		}
+
+		public void setLanguage(String language) {
+			this.language = language;
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder builder = new StringBuilder();
+			if (null != music) builder.append(music).append(" ");
+			if (null != firstname) builder.append(firstname).append(" ");
+			if (null != language) builder.append(language).append(" ");
+			return builder.toString();
+
+		}
+	}
 }

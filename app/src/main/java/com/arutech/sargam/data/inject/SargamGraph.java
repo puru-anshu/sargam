@@ -3,15 +3,17 @@ package com.arutech.sargam.data.inject;
 
 import com.arutech.sargam.activity.AboutActivity;
 import com.arutech.sargam.activity.BaseActivity;
-import com.arutech.sargam.activity.DownloadActivity;
 import com.arutech.sargam.activity.MainActivity;
 import com.arutech.sargam.activity.SearchActivity;
+import com.arutech.sargam.activity.WebActivity;
+import com.arutech.sargam.activity.WebSearchActivity;
 import com.arutech.sargam.activity.instance.AlbumActivity;
 import com.arutech.sargam.activity.instance.ArtistActivity;
 import com.arutech.sargam.activity.instance.AutoPlaylistActivity;
 import com.arutech.sargam.activity.instance.AutoPlaylistEditActivity;
 import com.arutech.sargam.activity.instance.GenreActivity;
 import com.arutech.sargam.activity.instance.PlaylistActivity;
+import com.arutech.sargam.activity.instance.TrackGroupActivity;
 import com.arutech.sargam.adapter.LibraryEmptyState;
 import com.arutech.sargam.dialog.AppendPlaylistDialogFragment;
 import com.arutech.sargam.dialog.CreatePlaylistDialogFragment;
@@ -27,6 +29,8 @@ import com.arutech.sargam.fragments.PlaylistFragment;
 import com.arutech.sargam.fragments.PreferenceFragment;
 import com.arutech.sargam.fragments.QueueFragment;
 import com.arutech.sargam.fragments.SongFragment;
+import com.arutech.sargam.fragments.web.TrackGroupFragment;
+import com.arutech.sargam.fragments.web.WebSongFragment;
 import com.arutech.sargam.player.ServicePlayerController;
 import com.arutech.sargam.viewmodel.AlbumViewModel;
 import com.arutech.sargam.viewmodel.ArtistViewModel;
@@ -39,6 +43,8 @@ import com.arutech.sargam.viewmodel.PlaylistViewModel;
 import com.arutech.sargam.viewmodel.RuleHeaderViewModel;
 import com.arutech.sargam.viewmodel.RuleViewModel;
 import com.arutech.sargam.viewmodel.SongViewModel;
+import com.arutech.sargam.viewmodel.web.TrackGroupViewModel;
+import com.arutech.sargam.viewmodel.web.WSongViewModel;
 import com.arutech.sargam.widgets.BaseWidget;
 
 public interface SargamGraph {
@@ -121,6 +127,18 @@ public interface SargamGraph {
 
 	void inject(BaseWidget baseWidget);
 
-	void inject(DownloadActivity downloadActivity);
+	void inject(WSongViewModel wSongViewModel);
+
+	void inject(TrackGroupViewModel trackGroupViewModel);
+
+	void inject(TrackGroupActivity trackGroupActivity);
+
+	void inject(WebActivity webActivity);
+
+	void inject(WebSongFragment webSongFragment);
+
+	void inject(TrackGroupFragment trackGroupFragment);
+
+	void inject(WebSearchActivity webSearchActivity);
 
 }

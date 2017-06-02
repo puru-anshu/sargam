@@ -179,6 +179,15 @@ public class LocalMusicStore implements MusicStore {
 
     @Override
     public Observable<Boolean> isLoading() {
+
+	    /**
+	     *  but while Zip emits items only when each of
+	     *  the zipped source Observables have emitted
+	     *  a previously unzipped item,
+	     *  CombineLatest emits an item whenever any of
+	     *  the source Observables emits an item
+	     *  (so long as each of the source Observables has emitted at least one item).
+	     */
         return Observable.combineLatest(mSongLoadingState, mArtistLoadingState, mAlbumLoadingState,
                 mGenreLoadingState, (songState, artistState, albumState, genreState) -> {
                     return songState || artistState || albumState || genreState;

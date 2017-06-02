@@ -115,14 +115,14 @@ public class PresetThemeStore implements ThemeStore {
 
     @Override
     public void setTheme(AppCompatActivity activity) {
-        applyNightMode(activity);
+        /*applyNightMode(activity);
         activity.setTheme(R.style.AppThemeLight);
         activity.getTheme().applyStyle(getPrimaryThemeId(), true);
         activity.getTheme().applyStyle(getAccentThemeId(), true);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             applyTaskDescription(activity);
-        }
+        }*/
     }
 
     private void applyNightMode(AppCompatActivity activity) {
