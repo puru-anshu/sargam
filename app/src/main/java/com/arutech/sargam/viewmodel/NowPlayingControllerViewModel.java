@@ -25,7 +25,6 @@ import com.arutech.sargam.SargamApplication;
 import com.arutech.sargam.activity.instance.AlbumActivity;
 import com.arutech.sargam.activity.instance.ArtistActivity;
 import com.arutech.sargam.data.store.MusicStore;
-import com.arutech.sargam.data.store.ThemeStore;
 import com.arutech.sargam.dialog.AppendPlaylistDialogFragment;
 import com.arutech.sargam.fragments.BaseFragment;
 import com.arutech.sargam.model.Song;
@@ -45,8 +44,6 @@ public class NowPlayingControllerViewModel extends BaseObservable {
 
     @Inject
     MusicStore mMusicStore;
-    @Inject
-    ThemeStore mThemeStore;
     @Inject
     PlayerController mPlayerController;
 
@@ -182,7 +179,7 @@ public class NowPlayingControllerViewModel extends BaseObservable {
 
     @ColorInt
     public int getSeekBarHeadTint() {
-        return mThemeStore.getAccentColor();
+        return mContext.getResources().getColor(R.color.accent);
     }
 
     @Bindable

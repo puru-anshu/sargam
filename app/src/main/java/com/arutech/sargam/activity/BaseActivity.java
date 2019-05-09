@@ -16,32 +16,31 @@ import android.widget.TextView;
 
 import com.arutech.sargam.R;
 import com.arutech.sargam.SargamApplication;
-import com.arutech.sargam.data.annotations.AccentTheme;
-import com.arutech.sargam.data.annotations.PrimaryTheme;
 import com.arutech.sargam.data.store.MediaStoreUtil;
+import com.arutech.sargam.data.store.MusicStore;
+import com.arutech.sargam.data.store.PlaylistStore;
 import com.arutech.sargam.data.store.PreferenceStore;
-import com.arutech.sargam.data.store.ThemeStore;
 import com.arutech.sargam.player.PlayerController;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
 import timber.log.Timber;
 
 public abstract class BaseActivity extends RxAppCompatActivity {
 
-	// Used when resuming the Activity to respond to a potential theme change
-	@PrimaryTheme
-	private int mPrimaryColor;
-	@AccentTheme
-	private int mAccentColor;
 
 	@Inject
 	PreferenceStore _mPreferenceStore;
-	@Inject
-	ThemeStore _mThemeStore;
+
 	@Inject
 	PlayerController _mPlayerController;
+
+	@Inject
+	MusicStore mMusicStore;
+	@Inject
+	PlaylistStore mPlaylistStore;
 
 	/**
 	 * @inheritDoc
@@ -49,24 +48,34 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		SargamApplication.getComponent(this).injectBaseActivity(this);
-
-		_mThemeStore.setTheme(this);
-		mPrimaryColor = _mPreferenceStore.getPrimaryColor();
-		mAccentColor = _mPreferenceStore.getAccentColor();
-
 		super.onCreate(savedInstanceState);
 		setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
-		if (_mPreferenceStore.showFirstStart()) {
+//		if (_mPreferenceStore.showFirstStart()) {
 			if (!MediaStoreUtil.hasPermission(this)) {
 				MediaStoreUtil.requestPermission(this).subscribe(granted -> {
 					if (granted) {
-						showFirstRunDialog();
+						//showFirstRunDialog();
+						Observable<Boolean> musicStoreResult = mMusicStore.refresh();
+						Observable<Boolean> playlistStoreResult = mPlaylistStore.refresh();
+
+						Observable<Boolean> combinedResult = Observable.combineLatest(
+								musicStoreResult, playlistStoreResult, (result1, result2) -> result1 && result2);
+
+						combinedResult.take(1)
+								.subscribe(successful -> {
+									if (successful) {
+										showSnackbar(getString(R.string.confirm_refresh_library));
+									}
+								}, throwable -> {
+									Timber.e(throwable, "Failed to refresh library");
+								});
+
 					}
 				});
 			}
 
-		}
+//		}
 
 		_mPlayerController.getInfo()
 				.compose(bindToLifecycle())
@@ -133,15 +142,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 	public void onResume() {
 		super.onResume();
 
-		// If the theme was changed since this Activity was created, or the automatic day/night
-		// theme has changed state, recreate this activity
-//		_mThemeStore.setTheme(this);
-//		boolean primaryDiff = mPrimaryColor != _mPreferenceStore.getPrimaryColor();
-//		boolean accentDiff = mAccentColor != _mPreferenceStore.getAccentColor();
-//
-//		if (primaryDiff || accentDiff) {
-//			recreate();
-//		}
+
 	}
 
 	/**

@@ -171,6 +171,7 @@ public final class MediaStoreUtil {
 
 	public static List<Song> getSongs(Context context, Uri uri, @Nullable String selection,
 	                                  @Nullable String[] selectionArgs) {
+
 		String musicSelection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
 		if (selection != null) {
 			musicSelection += " AND " + selection;
@@ -192,6 +193,7 @@ public final class MediaStoreUtil {
 
 	public static List<Song> getSongs(Context context, @Nullable String selection,
 	                                  @Nullable String[] selectionArgs) {
+
 		return getSongs(context, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
 				selection, selectionArgs);
 	}

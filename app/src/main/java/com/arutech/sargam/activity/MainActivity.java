@@ -24,7 +24,6 @@ import com.arutech.sargam.data.store.MediaStoreUtil;
 import com.arutech.sargam.data.store.MusicStore;
 import com.arutech.sargam.data.store.PlaylistStore;
 import com.arutech.sargam.data.store.PreferenceStore;
-import com.arutech.sargam.data.store.ThemeStore;
 import com.arutech.sargam.dialog.CreatePlaylistDialogFragment;
 import com.arutech.sargam.fragments.AlbumFragment;
 import com.arutech.sargam.fragments.ArtistFragment;
@@ -54,8 +53,6 @@ public class MainActivity extends BaseLibraryActivity implements View.OnClickLis
 	private static final String ACTION_SHOW_NOW_PLAYING_PAGE = "MainActivity.ShowNowPlayingPage";
 
 	@Inject
-	ThemeStore mThemeStore;
-	@Inject
 	MusicStore mMusicStore;
 	@Inject
 	PlayerController mPlayerController;
@@ -79,9 +76,11 @@ public class MainActivity extends BaseLibraryActivity implements View.OnClickLis
 		SargamApplication.getComponent(this).inject(this);
 		onNewIntent(getIntent());
 
-		initRefreshLayout();
-		mMusicStore.loadAll();
-		mPlaylistStore.loadPlaylists();
+		if (hasRwPermission()) {
+			initRefreshLayout();
+			mMusicStore.loadAll();
+			mPlaylistStore.loadPlaylists();
+		}
 
 		// Setup the FAB
 		FABMenu fab = (FABMenu) findViewById(R.id.fab);
@@ -205,8 +204,6 @@ public class MainActivity extends BaseLibraryActivity implements View.OnClickLis
 	private void initRefreshLayout() {
 		mRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.library_refresh_layout);
 		mRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
-		mRefreshLayout.setColorSchemeColors(mThemeStore.getPrimaryColor(),
-				mThemeStore.getAccentColor());
 		mRefreshLayout.setEnabled(false);
 
 		Observable.combineLatest(mMusicStore.isLoading(), mPlaylistStore.isLoading(),

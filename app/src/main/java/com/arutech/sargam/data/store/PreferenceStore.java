@@ -38,4 +38,6 @@ public interface PreferenceStore extends ReadOnlyPreferenceStore {
     void setIncludedDirectories(Collection<String> directories);
     void setExcludedDirectories(Collection<String> directories);
 
+	void setFullUnlocked(boolean b);
+	boolean isFullUnlocked();
 }

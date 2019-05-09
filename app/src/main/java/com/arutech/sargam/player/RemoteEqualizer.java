@@ -23,10 +23,8 @@ public class RemoteEqualizer implements Parcelable {
             int centerFrequency = equalizer.getCenterFreq(i);
             int lowFrequency = range[0];
             int highFrequency = range[1];
-
             bands[i] = new Band(lowFrequency, highFrequency, centerFrequency);
         }
-
         return bands;
     }
 

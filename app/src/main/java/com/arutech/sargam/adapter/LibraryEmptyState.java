@@ -85,6 +85,10 @@ public class LibraryEmptyState extends BasicEmptyState {
 
 	@Override
 	public void onAction1() {
+		refreshLibraries();
+	}
+
+	private void refreshLibraries() {
 		Observable<Boolean> musicStoreResult = mMusicStore.refresh();
 		Observable<Boolean> playlistStoreResult = mPlaylistStore.refresh();
 
@@ -108,8 +112,7 @@ public class LibraryEmptyState extends BasicEmptyState {
 		if (!MediaStoreUtil.hasPermission(mActivity)) {
 			MediaStoreUtil.requestPermission(mActivity)
 					.subscribe(granted -> {
-						mMusicStore.refresh();
-						mPlaylistStore.refresh();
+						refreshLibraries();
 					});
 		}
 	}

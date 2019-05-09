@@ -1,14 +1,19 @@
 package com.arutech.sargam.utils;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.media.MediaDescriptionCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
-import android.support.v7.app.NotificationCompat;
 import android.view.KeyEvent;
 
 import com.arutech.sargam.R;
@@ -21,6 +26,29 @@ import com.arutech.sargam.R;
  * @author Ian Lake
  */
 public class MediaStyleHelper {
+	private static final String CHANNEL_ID = "media_playback_channel";
+
+	@RequiresApi(Build.VERSION_CODES.O)
+	public static void createChannel(Context context) {
+		NotificationManager
+				mNotificationManager =
+				(NotificationManager) context
+						.getSystemService(Context.NOTIFICATION_SERVICE);
+		// The id of the channel.
+		String id = CHANNEL_ID;
+		// The user-visible name of the channel.
+		CharSequence name = "Media playback";
+		// The user-visible description of the channel.
+		String description = "Media playback controls";
+		int importance = NotificationManager.IMPORTANCE_LOW;
+		NotificationChannel mChannel = new NotificationChannel(id, name, importance);
+		// Configure the notification channel.
+		mChannel.setDescription(description);
+		mChannel.setShowBadge(false);
+		mChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+		mNotificationManager.createNotificationChannel(mChannel);
+	}
+
     /**
      * Build a notification using the information from the given media session.
      * @param context Context used to construct the notification.
@@ -29,12 +57,15 @@ public class MediaStyleHelper {
      */
     public static NotificationCompat.Builder from(Context context,
                                                   MediaSessionCompat mediaSession) {
+//	    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//		    MediaStyleHelper.createChannel(context);
+//	    }
 
         MediaControllerCompat controller = mediaSession.getController();
         MediaMetadataCompat mediaMetadata = controller.getMetadata();
         MediaDescriptionCompat description = mediaMetadata.getDescription();
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context,CHANNEL_ID);
 
         builder
                 .setContentTitle(description.getTitle())

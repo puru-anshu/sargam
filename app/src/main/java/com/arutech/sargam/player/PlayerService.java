@@ -13,9 +13,9 @@ import android.os.Process;
 import android.os.RemoteException;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.media.session.MediaButtonReceiver;
 import android.support.v4.media.session.MediaSessionCompat;
-import android.support.v7.app.NotificationCompat;
 import android.view.KeyEvent;
 
 import com.arutech.sargam.BuildConfig;
@@ -220,15 +220,24 @@ public class PlayerService extends Service implements MusicPlayer.OnPlaybackChan
         NotificationCompat.Builder builder = MediaStyleHelper.from(this, mediaSession);
 
         setupNotificationActions(builder);
+	    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+		    MediaStyleHelper.createChannel(this);
+	    }
 
         builder.setSmallIcon(getNotificationIcon())
                 .setDeleteIntent(getStopIntent())
-                .setStyle(
-                        new NotificationCompat.MediaStyle()
-                                .setShowActionsInCompactView(0, 1, 2)
-                                .setShowCancelButton(true)
-                                .setCancelButtonIntent(getStopIntent())
-                                .setMediaSession(musicPlayer.getMediaSession().getSessionToken()));
+		        .setStyle( new android.support.v4.media.app.NotificationCompat.MediaStyle()
+				        .setMediaSession(musicPlayer.getMediaSession().getSessionToken())
+				        .setShowCancelButton(true)
+				        .setCancelButtonIntent(getStopIntent())
+				        .setShowActionsInCompactView(0, 1, 2)
+		        );
+//                .setStyle(
+//                        new NotificationCompat.MediaStyle()
+//                                .setShowActionsInCompactView(0, 1, 2)
+//                                .setShowCancelButton(true)
+//                                .setCancelButtonIntent(getStopIntent())
+//                                .setMediaSession(musicPlayer.getMediaSession().getSessionToken()));
 
         showNotification(builder.build());
     }

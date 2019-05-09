@@ -2,6 +2,7 @@ package com.arutech.sargam;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
@@ -9,8 +10,6 @@ import com.activeandroid.ActiveAndroid;
 import com.arutech.sargam.data.inject.SargamComponentFactory;
 import com.arutech.sargam.data.inject.SargamGraph;
 import com.arutech.sargam.utils.CrashlyticsTree;
-import com.arutech.sargam.utils.compat.JockeyPreferencesCompat;
-import com.bumptech.glide.Glide;
 import com.crashlytics.android.Crashlytics;
 
 import io.fabric.sdk.android.Fabric;
@@ -22,15 +21,15 @@ public class SargamApplication extends Application {
 
 	@Override
 	public void onCreate() {
-		setupStrictMode();
 		super.onCreate();
 		ActiveAndroid.initialize(this);
 
-		// setupCrashlytics();
+		setupCrashlytics();
 		setupTimber();
+//		setupStrictMode();
 
 		mComponent = createDaggerComponent();
-		JockeyPreferencesCompat.upgradeSharedPreferences(this);
+
 	}
 
 	@NonNull
@@ -39,19 +38,19 @@ public class SargamApplication extends Application {
 	}
 
 	private void setupStrictMode() {
-	    /*if (BuildConfig.DEBUG) {
-            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                    .detectDiskReads()
-                    .detectDiskWrites()
-                    .detectAll()
-                    .penaltyLog()
-                    .build());
-            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                    .detectLeakedSqlLiteObjects()
-                    .detectLeakedClosableObjects()
-                    .penaltyLog()
-                    .build());
-        }*/
+		if (BuildConfig.DEBUG) {
+			StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+					.detectDiskReads()
+					.detectDiskWrites()
+					.detectAll()
+					.penaltyLog()
+					.build());
+			StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+					.detectLeakedSqlLiteObjects()
+					.detectLeakedClosableObjects()
+					.penaltyLog()
+					.build());
+		}
 	}
 
 	private void setupCrashlytics() {
@@ -69,7 +68,7 @@ public class SargamApplication extends Application {
 	@Override
 	public void onTrimMemory(int level) {
 		super.onTrimMemory(level);
-		Glide.with(this).onTrimMemory(level);
+//		Glide.with(this).onTrimMemory(level);
 	}
 
 	public static SargamGraph getComponent(Fragment fragment) {

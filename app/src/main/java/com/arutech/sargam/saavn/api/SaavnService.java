@@ -19,85 +19,85 @@ import retrofit2.http.Headers;
 import retrofit2.http.Query;
 
 
-public interface SaavnService {
+public interface  SaavnService {
 
 	@Headers({
 			"Content-Type: application/json;charset=utf-8",
 			"Accept: application/json"
 	})
-	@GET("/api.php?__call=reco.getreco&p=1&n=30&ctx=android&_format=json&_marker=0")
+	@GET("/api.php?__call=reco.getreco&p=1&n=30&_format=json&_marker=0")
 	Observable<LinkedTreeMap> getRecommendation(@Query("pid") String songId);
 
 
-	@GET("/api.php?cc=in&session_device_id=ORy8Mq5D.1494219534123&app_version=5.6&_marker=0&ctx=android" +
+	@GET("/api.php?cc=in&session_device_id=ORy8Mq5D.1494219534123&app_version=5.6&_marker=0" +
 			"&api_version=4&manufacturer=Google&network_operator=Reliance&readable_version=5.6&build=2&v=61" +
 			"&_format=json&model=Pixel&network_subtype=&state=logout&network_type=WIFI" +
 			"&__call=search.getAlbumResults")
 	Observable<SearchGroup> getAlbumSearchResult(@Query("q") String searchString);
 
-	@GET("/api.php?cc=in&session_device_id=ORy8Mq5D.1494219534123&app_version=5.6&_marker=0&ctx=android" +
+	@GET("/api.php?cc=in&session_device_id=ORy8Mq5D.1494219534123&app_version=5.6&_marker=0" +
 			"&api_version=4&manufacturer=Google&network_operator=Reliance&readable_version=5.6&build=2&v=61" +
 			"&_format=json&model=Pixel&network_subtype=&state=logout&network_type=WIFI" +
 			"&__call=search.getPlaylistResults")
 	Observable<SearchGroup> getPlaylistSearchResult(@Query("q") String searchString);
 
 
-	@GET("/api.php?cc=in&session_device_id=ORy8Mq5D.1494219534123&app_version=5.6&_marker=0&ctx=android" +
+	@GET("/api.php?cc=in&session_device_id=ORy8Mq5D.1494219534123&app_version=5.6&_marker=0" +
 			"&api_version=4&manufacturer=Google&network_operator=Reliance&readable_version=5.6&build=2&v=61" +
 			"&_format=json&model=Pixel&network_subtype=&state=logout&network_type=WIFI" +
 			"&__call=search.getArtistResults")
 	Observable<ArtistSearch> getArtistSearchResult(@Query("q") String searchString);
 
-	@GET("/api.php?cc=in&session_device_id=ORy8Mq5D.1494219534123&app_version=5.6&_marker=0&ctx=android" +
+	@GET("/api.php?cc=in&session_device_id=ORy8Mq5D.1494219534123&app_version=5.6&_marker=0" +
 			"&api_version=4&manufacturer=Google&network_operator=Reliance&readable_version=5.6&build=2&v=61" +
 			"&_format=json&model=Pixel&network_subtype=&state=logout&network_type=WIFI" +
 			"&__call=search.getResults")
 	Observable<TrackSearch> geSongSearchResult(@Query("q") String searchString);
 
-	@GET("/api.php?cc=in&session_device_id=ORy8Mq5D.1494219534123&app_version=5.6&_marker=0&ctx=android" +
+	@GET("/api.php?cc=in&session_device_id=ORy8Mq5D.1494219534123&app_version=5.6&_marker=0" +
 			"&api_version=4&manufacturer=Google&network_operator=Reliance&readable_version=5.6&build=2&v=61" +
 			"&_format=json&model=Pixel&network_subtype=&state=logout&network_type=WIFI" +
 			"&__call=content.getAlbumDetails")
 	Observable<TrackGroupDetail> getAlbumDetail(@Query("albumid") String albumId);
 
-	@GET("/api.php?cc=in&session_device_id=ORy8Mq5D.1494219534123&app_version=5.6&_marker=0&ctx=android" +
+	@GET("/api.php?cc=in&session_device_id=ORy8Mq5D.1494219534123&app_version=5.6&_marker=0" +
 			"&api_version=4&manufacturer=Google&network_operator=Reliance&readable_version=5.6&build=2&v=61" +
 			"&_format=json&model=Pixel&network_subtype=&state=logout&network_type=WIFI" +
 			"&__call=playlist.getDetails")
 	Observable<TrackGroupDetail> getPlaylistDetail(@Query("listid") String albumId);
 
 
-	@GET("/api.php?cc=in&session_device_id=ORy8Mq5D.1494219534123&app_version=5.6&_marker=0&ctx=android" +
+	@GET("/api.php?cc=in&session_device_id=ORy8Mq5D.1494219534123&app_version=5.6&_marker=0" +
 			"&api_version=4&manufacturer=Google&network_operator=Reliance&readable_version=5.6&build=2&v=61" +
 			"&_format=json&model=Pixel&network_subtype=&state=logout&network_type=WIFI" +
 			"&__call=content.getFeaturedPlaylists")
 	Observable<List<TrackGroup>> getFeaturedPlaylists();
 
 
-	@GET("/api.php?cc=in&session_device_id=ORy8Mq5D.1494219534123&app_version=5.6&_marker=0&ctx=android" +
+	@GET("/api.php?cc=in&session_device_id=ORy8Mq5D.1494219534123&app_version=5.6&_marker=0" +
 			"&api_version=4&manufacturer=Google&network_operator=Reliance&readable_version=5.6&build=2&v=61" +
 			"&_format=json&model=Pixel&network_subtype=&state=logout&network_type=WIFI" +
 			"&__call=content.getAlbums")
 	Observable<List<TrackGroup>> getFeaturedAlbums();
 
-	@GET("/api.php?cc=in&session_device_id=ORy8Mq5D.1494219534123&app_version=5.6&_marker=0&ctx=android" +
+	@GET("/api.php?cc=in&session_device_id=ORy8Mq5D.1494219534123&app_version=5.6&_marker=0" +
 			"&api_version=4&manufacturer=Google&network_operator=Reliance&readable_version=5.6&build=2&v=61" +
 			"&_format=json&model=Pixel&network_subtype=&state=logout&network_type=WIFI" +
 			"&__call=content.getCharts")
 	Observable<List<TrackGroup>> getShows();
 
 
-	@GET("/api.php?cc=in&session_device_id=ORy8Mq5D.1494219534123&app_version=5.6&_marker=0&ctx=android&api_version=4&manufacturer=Google&network_operator=Reliance&readable_version=5.6&build=2&v=61" +
+	@GET("/api.php?cc=in&session_device_id=ORy8Mq5D.1494219534123&app_version=5.6&_marker=0&api_version=4&manufacturer=Google&network_operator=Reliance&readable_version=5.6&build=2&v=61" +
 			"&_format=json&model=Pixel&network_subtype=&state=logout&network_type=WIFI" +
 			"&__call=artist.getArtistPageDetails")
 	Observable<ArtistBio> getArtistBio(@Query("artistId") String artistId);
 
-	@GET("/api.php?cc=in&session_device_id=ORy8Mq5D.1494219534123&app_version=5.6&_marker=0&ctx=android&api_version=4&manufacturer=Google&network_operator=Reliance&readable_version=5.6&build=2&v=61" +
+	@GET("/api.php?cc=in&session_device_id=ORy8Mq5D.1494219534123&app_version=5.6&_marker=0&api_version=4&manufacturer=Google&network_operator=Reliance&readable_version=5.6&build=2&v=61" +
 			"&_format=json&model=Pixel&network_subtype=&state=logout&network_type=WIFI" +
 			"&__call=autocomplete.get")
 	Observable<Autocomplete> autocomplete(@Query("query") String query);
 
-	@GET("/api.php?cc=in&session_device_id=ORy8Mq5D.1494219534123&app_version=5.6&_marker=0&ctx=android&api_version=4&manufacturer=Google&network_operator=Reliance&readable_version=5.6&build=2&v=61" +
+	@GET("/api.php?cc=in&session_device_id=ORy8Mq5D.1494219534123&app_version=5.6&_marker=0&api_version=4&manufacturer=Google&network_operator=Reliance&readable_version=5.6&build=2&v=61" +
 			"&_format=json&model=Pixel&network_subtype=&state=logout&network_type=WIFI" +
 			"&__call=song.getDetails")
 	Observable<Map<String, Track>> getSongDetail(@Query("pids") String songId);

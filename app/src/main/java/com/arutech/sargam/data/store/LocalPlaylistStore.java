@@ -67,7 +67,7 @@ public class LocalPlaylistStore implements PlaylistStore {
 	@Override
 	public Observable<Boolean> refresh() {
 		if (mPlaylists == null) {
-			return Observable.just(true);
+			mPlaylists = BehaviorSubject.createDefault(Collections.emptyList());
 		}
 		return Observable.fromCallable(
 				() -> {

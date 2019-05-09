@@ -10,6 +10,8 @@ import android.databinding.ObservableInt;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.graphics.Palette;
@@ -25,11 +27,12 @@ import com.arutech.sargam.saavn.api.model.TrackGroup;
 import com.arutech.sargam.saavn.data.store.SaavnStore;
 import com.arutech.sargam.utils.ViewUtils;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -192,7 +195,7 @@ public class TrackGroupViewModel extends BaseObservable {
 		};
 	}
 
-	private static class ObservableTarget extends SimpleTarget<GlideDrawable> {
+	private static class ObservableTarget extends SimpleTarget<Drawable> {
 
 		private ObservableField<Drawable> mTarget;
 
@@ -207,14 +210,7 @@ public class TrackGroupViewModel extends BaseObservable {
 		}
 
 		@Override
-		public void onLoadFailed(Exception e, Drawable errorDrawable) {
-			mTarget.set(errorDrawable);
-			Timber.e(e, "failed to load thumbnail");
-		}
-
-		@Override
-		public void onResourceReady(GlideDrawable resource,
-		                            GlideAnimation<? super GlideDrawable> glideAnimation) {
+		public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
 
 			Drawable start = mTarget.get();
 
@@ -224,6 +220,7 @@ public class TrackGroupViewModel extends BaseObservable {
 				setDrawable(resource);
 			}
 		}
+
 
 		private void setDrawableWithFade(Drawable start, Drawable end) {
 			TransitionDrawable transition = new TransitionDrawable(new Drawable[]{start, end});
@@ -238,7 +235,7 @@ public class TrackGroupViewModel extends BaseObservable {
 		}
 	}
 
-	private static class PaletteListener implements RequestListener<String, GlideDrawable> {
+	private static class PaletteListener implements RequestListener<Drawable> {
 
 		private static Map<String, Palette.Swatch> sColorMap;
 
@@ -257,30 +254,7 @@ public class TrackGroupViewModel extends BaseObservable {
 			mBackgroundColor = background;
 		}
 
-		@Override
-		public boolean onException(Exception e, String model, Target<GlideDrawable> target,
-		                           boolean isFirstResource) {
-			return false;
-		}
 
-		@Override
-		public boolean onResourceReady(GlideDrawable resource, String model,
-		                               Target<GlideDrawable> target, boolean isFromMemoryCache,
-		                               boolean isFirstResource) {
-
-			if (sColorMap.containsKey(model)) {
-				Palette.Swatch swatch = sColorMap.get(model);
-				if (isFromMemoryCache) {
-					setSwatch(swatch);
-				} else {
-					animateSwatch(swatch);
-				}
-			} else {
-				generateSwatch(model, resource);
-			}
-
-			return false;
-		}
 
 		private void generateSwatch(String source, Drawable image) {
 			Palette.from(ViewUtils.drawableToBitmap(image)).generate(palette -> {
@@ -337,5 +311,26 @@ public class TrackGroupViewModel extends BaseObservable {
 		}
 
 
+		@Override
+		public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+			return false;
+		}
+
+		@Override
+		public boolean onResourceReady(Drawable resource,
+		                               Object model, Target<Drawable> target,
+		                               DataSource dataSource, boolean isFirstResource) {
+			if (sColorMap.containsKey(model.toString())) {
+				Palette.Swatch swatch = sColorMap.get(model);
+				if (isFirstResource) {
+					setSwatch(swatch);
+				} else {
+					animateSwatch(swatch);
+				}
+			} else {
+				generateSwatch(model.toString(), resource);
+			}
+			return false;
+		}
 	}
 }

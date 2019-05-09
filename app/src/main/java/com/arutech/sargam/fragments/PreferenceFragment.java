@@ -4,10 +4,7 @@ package com.arutech.sargam.fragments;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceGroupAdapter;
@@ -24,7 +21,6 @@ import android.widget.Toast;
 import com.arutech.sargam.R;
 import com.arutech.sargam.SargamApplication;
 import com.arutech.sargam.data.store.PreferenceStore;
-import com.arutech.sargam.data.store.ThemeStore;
 import com.arutech.sargam.utils.Util;
 import com.arutech.sargam.view.BackgroundDecoration;
 
@@ -40,8 +36,6 @@ public class PreferenceFragment extends PreferenceFragmentCompat
 
 	@Inject
 	PreferenceStore mPrefStore;
-	@Inject
-	ThemeStore mThemeStore;
 
 	@Override
 	public void onCreate(final Bundle savedInstanceState) {
@@ -70,14 +64,11 @@ public class PreferenceFragment extends PreferenceFragmentCompat
 	public RecyclerView onCreateRecyclerView(LayoutInflater inflater, ViewGroup parent,
 	                                         Bundle savedInstanceState) {
 		RecyclerView view = super.onCreateRecyclerView(inflater, parent, savedInstanceState);
-//        view.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.background));
 
 		int padding = (int) getResources().getDimension(R.dimen.global_padding);
 		view.setPadding(padding, 0, padding, 0);
 
 		view.addItemDecoration(new BackgroundDecoration(android.R.id.title));
-//        view.addItemDecoration(new DividerDecoration(getContext(), android.R.id.title));
-
 		return view;
 	}
 
@@ -159,36 +150,10 @@ public class PreferenceFragment extends PreferenceFragmentCompat
 						.show();
 			}
 			return true;
-		} else if (DIRECTORY_FRAGMENT.equals(preference.getFragment())) {
-			String prefKey = preference.getKey();
-			boolean exclude = getString(R.string.pref_key_excluded_dirs).equals(prefKey);
-
-			showDirectoryInclusionExclusionFragment(exclude);
-			return true;
-		} else if (getString(R.string.pref_key_create_launcher_icon).equals(preference.getKey())) {
-			if (mPrefStore.getIconColor() != mPrefStore.getPrimaryColor()) {
-				showNewShortcutDialog();
-			} else {
-				View root = getView();
-				Snackbar.make(root, R.string.add_shortcut_already_matched, Snackbar.LENGTH_LONG)
-						.show();
-			}
-			return true;
 		}
 		return super.onPreferenceTreeClick(preference);
 	}
 
-	private void showNewShortcutDialog() {
-		new AlertDialog.Builder(getActivity())
-				.setTitle(R.string.add_shortcut)
-				.setMessage(R.string.add_shortcut_description)
-				.setPositiveButton(R.string.action_add,
-						(dialog, which) -> {
-							mThemeStore.createThemedLauncherIcon();
-						})
-				.setNegativeButton(R.string.action_cancel, null)
-				.show();
-	}
 
 	private void replaceFragment(Fragment next) {
 		getFragmentManager().beginTransaction()
@@ -203,9 +168,6 @@ public class PreferenceFragment extends PreferenceFragmentCompat
 		replaceFragment(new EqualizerFragment());
 	}
 
-	private void showDirectoryInclusionExclusionFragment(boolean exclude) {
-		replaceFragment(DirectoryListFragment.newInstance(exclude));
-	}
 
 	@Override
 	public boolean onLongClick(View v) {

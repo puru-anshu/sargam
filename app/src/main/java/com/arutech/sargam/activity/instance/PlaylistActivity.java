@@ -88,7 +88,7 @@ public class PlaylistActivity extends BaseLibraryActivity
 
 	@Override
 	protected int getContentLayoutResource() {
-		return R.layout.activity_instance;
+		return R.layout.activity_instance_artwork;
 	}
 
 	private void setupAdapter() {

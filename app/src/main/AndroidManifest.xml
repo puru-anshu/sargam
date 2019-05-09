@@ -14,12 +14,15 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppThemeLight">
-        <meta-data android:name="AA_DB_NAME"  android:value="sargam.db" />
-        <meta-data  android:name="AA_DB_VERSION" android:value="2" />
-
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="sargam.db"/>
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="2"/>
 
 
         <meta-data
@@ -29,142 +32,13 @@
         <activity
             android:name=".activity.MainActivity"
             android:theme="@style/AppThemeLight"
-            android:windowSoftInputMode="adjustPan|adjustNothing"/>
-
-        <activity-alias
-            android:name=".activity.LibraryActivity"
-            android:icon="@mipmap/ic_launcher"
-            android:targetActivity=".activity.MainActivity">
+            android:windowSoftInputMode="adjustPan|adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
 
-            <meta-data
-                android:name="android.app.shortcuts"
-                android:resource="@xml/shortcuts"/>
-        </activity-alias>
-        <activity-alias
-            android:name=".activity.LibraryActivity$Red"
-            android:enabled="false"
-            android:icon="@mipmap/ic_launcher_red"
-            android:targetActivity=".activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.shortcuts"
-                android:resource="@xml/shortcuts"/>
-        </activity-alias>
-        <activity-alias
-            android:name=".activity.LibraryActivity$Orange"
-            android:enabled="false"
-            android:icon="@mipmap/ic_launcher_orange"
-            android:targetActivity=".activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.shortcuts"
-                android:resource="@xml/shortcuts"/>
-        </activity-alias>
-        <activity-alias
-            android:name=".activity.LibraryActivity$Yellow"
-            android:enabled="false"
-            android:icon="@mipmap/ic_launcher_yellow"
-            android:targetActivity=".activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.shortcuts"
-                android:resource="@xml/shortcuts"/>
-        </activity-alias>
-        <activity-alias
-            android:name=".activity.LibraryActivity$Green"
-            android:enabled="false"
-            android:icon="@mipmap/ic_launcher_green"
-            android:targetActivity=".activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.shortcuts"
-                android:resource="@xml/shortcuts"/>
-        </activity-alias>
-        <activity-alias
-            android:name=".activity.LibraryActivity$Blue"
-            android:enabled="false"
-            android:icon="@mipmap/ic_launcher_blue"
-            android:targetActivity=".activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.shortcuts"
-                android:resource="@xml/shortcuts"/>
-        </activity-alias>
-        <activity-alias
-            android:name=".activity.LibraryActivity$Purple"
-            android:enabled="false"
-            android:icon="@mipmap/ic_launcher_purple"
-            android:targetActivity=".activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.shortcuts"
-                android:resource="@xml/shortcuts"/>
-        </activity-alias>
-        <activity-alias
-            android:name=".activity.LibraryActivity$Grey"
-            android:enabled="false"
-            android:icon="@mipmap/ic_launcher_grey"
-            android:targetActivity=".activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.shortcuts"
-                android:resource="@xml/shortcuts"/>
-        </activity-alias>
-        <activity-alias
-            android:name=".activity.LibraryActivity$Black"
-            android:enabled="false"
-            android:icon="@mipmap/ic_launcher_black"
-            android:targetActivity=".activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.shortcuts"
-                android:resource="@xml/shortcuts"/>
-        </activity-alias>
 
         <!-- Search Activity -->
         <activity
@@ -262,7 +136,7 @@
             android:label="@string/widget_square_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
-                <action android:name="marverenic.jockey.player.REFRESH"/>
+                <action android:name="com.arutech.sargam.player.REFRESH"/>
             </intent-filter>
 
             <meta-data
@@ -274,7 +148,7 @@
             android:label="@string/widget_wide_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
-                <action android:name="marverenic.jockey.player.REFRESH"/>
+                <action android:name="com.arutech.sargam.player.REFRESH"/>
             </intent-filter>
 
             <meta-data
@@ -288,7 +162,7 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
             <intent-filter>
-                <action android:name="marverenic.jockey.player.REFRESH"/>
+                <action android:name="com.arutech.sargam.player.REFRESH"/>
             </intent-filter>
 
             <meta-data
@@ -306,9 +180,9 @@
             android:name=".player.ServicePlayerController$Listener"
             android:exported="false">
             <intent-filter android:priority="999">
-                <action android:name="marverenic.jockey.player.REFRESH"/>
-                <action android:name="marverenic.jockey.player.INFO"/>
-                <action android:name="marverenic.jockey.player.ERROR"/>
+                <action android:name="com.arutech.sargam.player.REFRESH"/>
+                <action android:name="com.arutech.sargam.player.INFO"/>
+                <action android:name="com.arutech.sargam.player.ERROR"/>
             </intent-filter>
         </receiver>
 

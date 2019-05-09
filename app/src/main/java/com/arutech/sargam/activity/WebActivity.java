@@ -16,7 +16,6 @@ import android.view.MenuItem;
 
 import com.arutech.sargam.R;
 import com.arutech.sargam.SargamApplication;
-import com.arutech.sargam.data.store.ThemeStore;
 import com.arutech.sargam.fragments.web.TrackGroupFragment;
 import com.arutech.sargam.fragments.web.WebSongFragment;
 import com.arutech.sargam.player.PlayerController;
@@ -29,8 +28,7 @@ import timber.log.Timber;
 
 public class WebActivity extends BaseLibraryActivity {
 
-	@Inject
-	ThemeStore mThemeStore;
+
 	@Inject
 	SaavnStore mMusicStore;
 	@Inject
@@ -82,8 +80,7 @@ public class WebActivity extends BaseLibraryActivity {
 	private void initRefreshLayout() {
 		mRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.library_refresh_layout);
 		mRefreshLayout.setSize(SwipeRefreshLayout.DEFAULT);
-		mRefreshLayout.setColorSchemeColors(mThemeStore.getPrimaryColor(),
-				mThemeStore.getAccentColor());
+
 		mRefreshLayout.setEnabled(false);
 		mMusicStore.isLoading().compose(bindToLifecycle())
 				.observeOn(AndroidSchedulers.mainThread()).

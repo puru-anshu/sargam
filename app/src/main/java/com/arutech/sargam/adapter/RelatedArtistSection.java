@@ -1,12 +1,7 @@
 package com.arutech.sargam.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +15,6 @@ import com.arutech.sargam.lastfm.model.Image;
 import com.arutech.sargam.lastfm.model.LfmArtist;
 import com.arutech.sargam.model.Artist;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.BitmapImageViewTarget;
 
 import java.util.List;
 
@@ -83,29 +77,8 @@ public class RelatedArtistSection extends HeterogeneousAdapter.ListSection<LfmAr
 
             Glide.with(context)
                     .load(artUrl)
-                    .asBitmap()
                     .error(R.drawable.ic_empty_music2)
-                    .into(new BitmapImageViewTarget(artwork) {
-                        @Override
-                        protected void setResource(Bitmap resource) {
-                            RoundedBitmapDrawable circularBitmapDrawable =
-                                    RoundedBitmapDrawableFactory.create(
-                                            context.getResources(),
-                                            resource);
-                            circularBitmapDrawable.setCircular(true);
-                            artwork.setImageDrawable(circularBitmapDrawable);
-                        }
-
-                        @Override
-                        public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                            RoundedBitmapDrawable circularBitmapDrawable =
-                                    RoundedBitmapDrawableFactory.create(
-                                            context.getResources(),
-                                            ((BitmapDrawable) errorDrawable).getBitmap());
-                            circularBitmapDrawable.setCircular(true);
-                            artwork.setImageDrawable(circularBitmapDrawable);
-                        }
-                    });
+                    .into(artwork);
 
             artistName.setText(item.getName());
         }

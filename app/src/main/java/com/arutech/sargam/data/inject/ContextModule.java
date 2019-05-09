@@ -3,9 +3,7 @@ package com.arutech.sargam.data.inject;
 import android.content.Context;
 
 import com.arutech.sargam.data.store.PreferenceStore;
-import com.arutech.sargam.data.store.PresetThemeStore;
 import com.arutech.sargam.data.store.SharedPreferenceStore;
-import com.arutech.sargam.data.store.ThemeStore;
 
 import javax.inject.Singleton;
 
@@ -32,10 +30,5 @@ public class ContextModule {
         return new SharedPreferenceStore(context);
     }
 
-    @Provides
-    @Singleton
-    public ThemeStore provideThemeStore(Context context, PreferenceStore preferenceStore) {
-        return new PresetThemeStore(context, preferenceStore);
-    }
 
 }

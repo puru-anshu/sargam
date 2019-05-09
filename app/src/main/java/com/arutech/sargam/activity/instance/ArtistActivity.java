@@ -22,7 +22,6 @@ import com.arutech.sargam.adapter.RelatedArtistSection;
 import com.arutech.sargam.adapter.SongSection;
 import com.arutech.sargam.data.store.MusicStore;
 import com.arutech.sargam.data.store.PreferenceStore;
-import com.arutech.sargam.data.store.ThemeStore;
 import com.arutech.sargam.lastfm.data.store.LastFmStore;
 import com.arutech.sargam.lastfm.model.Image;
 import com.arutech.sargam.lastfm.model.LfmArtist;
@@ -56,8 +55,6 @@ public class ArtistActivity extends BaseLibraryActivity {
 	LastFmStore mLfmStore;
 	@Inject
 	PreferenceStore mPrefStore;
-	@Inject
-	ThemeStore mThemeStore;
 
 	private RecyclerView mRecyclerView;
 	private HeterogeneousAdapter mAdapter;
@@ -204,9 +201,8 @@ public class ArtistActivity extends BaseLibraryActivity {
 		if (hero != null) {
 			Glide.with(this)
 					.load(hero.getUrl())
-					.diskCacheStrategy(DiskCacheStrategy.SOURCE)
+					.diskCacheStrategy(DiskCacheStrategy.DATA)
 					.centerCrop()
-					.animate(android.R.anim.fade_in)
 					.into((ImageView) findViewById(R.id.activity_backdrop));
 		}
 	}
@@ -299,7 +295,7 @@ public class ArtistActivity extends BaseLibraryActivity {
 
 	private void setupLoadingAdapter() {
 		if (mLoadingSection == null && mLfmReference == null) {
-			int[] colors = {mThemeStore.getPrimaryColor(), mThemeStore.getAccentColor()};
+			int[] colors = {getColor(R.color.primary), getColor(R.color.accent)};
 			mLoadingSection = new LoadingSingleton(colors);
 			mAdapter.addSection(mLoadingSection, 0);
 		}

@@ -526,7 +526,8 @@ public class ServicePlayerController implements PlayerController {
 						}
 						if (!song.isInLibrary()) {
 							Bitmap bitmap = Glide.with(mContext)
-									.load(song.getArtWork()).asBitmap().into(100, 100).get();
+									.asBitmap()
+									.load(song.getArtWork()).into(100, 100).get();
 							return bitmap;
 						}
 
@@ -625,7 +626,7 @@ public class ServicePlayerController implements PlayerController {
 						.map(data -> (data == null) ? mNullValue : data)
 						.map(Optional::ofNullable)
 						.subscribe(mSubject::onNext, throwable -> {
-							Timber.e(throwable, "Failed to fetch " + mName + " property.");
+//							Timber.e(throwable, "Failed to fetch " + mName + " property.");
 						});
 			}
 		}

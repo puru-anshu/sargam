@@ -21,7 +21,6 @@ import android.widget.Button;
 import com.arutech.sargam.R;
 import com.arutech.sargam.SargamApplication;
 import com.arutech.sargam.data.store.PlaylistStore;
-import com.arutech.sargam.data.store.ThemeStore;
 import com.arutech.sargam.model.Playlist;
 import com.arutech.sargam.model.Song;
 
@@ -39,8 +38,6 @@ public class CreatePlaylistDialogFragment extends DialogFragment implements Text
 
     @Inject
     PlaylistStore mPlaylistStore;
-    @Inject
-    ThemeStore mThemeStore;
 
     private AlertDialog mDialog;
     private TextInputLayout mInputLayout;
@@ -125,7 +122,7 @@ public class CreatePlaylistDialogFragment extends DialogFragment implements Text
             button.setTextColor(ResourcesCompat.getColor(getResources(),
                     R.color.red_transparent, getActivity().getTheme()));
         } else {
-            button.setTextColor(mThemeStore.getAccentColor());
+            button.setTextColor(getResources().getColor(R.color.accent));
         }
     }
 

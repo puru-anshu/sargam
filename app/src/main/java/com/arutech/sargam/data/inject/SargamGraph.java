@@ -20,7 +20,6 @@ import com.arutech.sargam.dialog.CreatePlaylistDialogFragment;
 import com.arutech.sargam.dialog.PlaylistCollisionDialogFragment;
 import com.arutech.sargam.fragments.AlbumFragment;
 import com.arutech.sargam.fragments.ArtistFragment;
-import com.arutech.sargam.fragments.DirectoryListFragment;
 import com.arutech.sargam.fragments.EqualizerFragment;
 import com.arutech.sargam.fragments.GenreFragment;
 import com.arutech.sargam.fragments.MiniplayerFragment;
@@ -71,7 +70,6 @@ public interface SargamGraph {
 
 	void inject(AlbumFragment albumFragment);
 
-	void inject(DirectoryListFragment directoryListFragment);
 
 	void inject(GenreFragment genreFragment);
 

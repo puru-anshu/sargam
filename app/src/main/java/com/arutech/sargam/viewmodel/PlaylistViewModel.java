@@ -12,6 +12,8 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.support.annotation.ColorInt;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.graphics.Palette;
@@ -31,11 +33,12 @@ import com.arutech.sargam.player.PlayerController;
 import com.arutech.sargam.utils.Util;
 import com.arutech.sargam.utils.ViewUtils;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -255,7 +258,7 @@ public class PlaylistViewModel extends BaseObservable {
 	}
 
 
-	private static class ObservableTarget extends SimpleTarget<GlideDrawable> {
+	private static class ObservableTarget extends SimpleTarget<Drawable> {
 
 		private ObservableField<Drawable> mTarget;
 
@@ -270,15 +273,7 @@ public class PlaylistViewModel extends BaseObservable {
 		}
 
 		@Override
-		public void onLoadFailed(Exception e, Drawable errorDrawable) {
-			mTarget.set(errorDrawable);
-			Timber.e(e, "failed to load thumbnail");
-		}
-
-		@Override
-		public void onResourceReady(GlideDrawable resource,
-		                            GlideAnimation<? super GlideDrawable> glideAnimation) {
-
+		public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
 			Drawable start = mTarget.get();
 
 			if (start != null) {
@@ -287,6 +282,7 @@ public class PlaylistViewModel extends BaseObservable {
 				setDrawable(resource);
 			}
 		}
+
 
 		private void setDrawableWithFade(Drawable start, Drawable end) {
 			TransitionDrawable transition = new TransitionDrawable(new Drawable[]{start, end});
@@ -301,7 +297,7 @@ public class PlaylistViewModel extends BaseObservable {
 		}
 	}
 
-	private static class PaletteListener implements RequestListener<Uri, GlideDrawable> {
+	private static class PaletteListener implements RequestListener<Drawable> {
 
 		private static Map<Uri, Palette.Swatch> sColorMap;
 
@@ -318,31 +314,6 @@ public class PlaylistViewModel extends BaseObservable {
 			mTitleTextColor = title;
 			mArtistTextColor = artist;
 			mBackgroundColor = background;
-		}
-
-		@Override
-		public boolean onException(Exception e, Uri model, Target<GlideDrawable> target,
-		                           boolean isFirstResource) {
-			return false;
-		}
-
-		@Override
-		public boolean onResourceReady(GlideDrawable resource, Uri model,
-		                               Target<GlideDrawable> target, boolean isFromMemoryCache,
-		                               boolean isFirstResource) {
-
-			if (sColorMap.containsKey(model)) {
-				Palette.Swatch swatch = sColorMap.get(model);
-				if (isFromMemoryCache) {
-					setSwatch(swatch);
-				} else {
-					animateSwatch(swatch);
-				}
-			} else {
-				generateSwatch(model, resource);
-			}
-
-			return false;
 		}
 
 		private void generateSwatch(Uri source, Drawable image) {
@@ -397,6 +368,18 @@ public class PlaylistViewModel extends BaseObservable {
 				return palette.getDarkMutedSwatch();
 			}
 			return null;
+		}
+
+
+		@Override
+		public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+			return false;
+		}
+
+		@Override
+		public boolean onResourceReady(Drawable resource, Object model,
+		                               Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+			return false;
 		}
 	}
 

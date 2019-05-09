@@ -11,16 +11,6 @@
             android:key="@string/pref_key_default_page"
             android:title="Default Page" />
     </PreferenceCategoryCompat>
-    <PreferenceCategoryCompat android:title="@string/pref_category_library">
-        <Preference
-            android:title="@string/pref_directory_include"
-            android:key="@string/pref_key_included_dirs"
-            android:fragment="com.marverenic.music.fragments.DirectoryListFragment"/>
-        <Preference
-            android:title="@string/pref_directory_exclude"
-            android:key="@string/pref_key_excluded_dirs"
-            android:fragment="com.marverenic.music.fragments.DirectoryListFragment"/>
-    </PreferenceCategoryCompat>
     <PreferenceCategoryCompat android:title="@string/settings_category_general">
         <SwitchPreferenceCompat
             android:defaultValue="true"

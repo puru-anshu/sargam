@@ -1,6 +1,5 @@
 package com.arutech.sargam.fragments;
 
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
@@ -12,18 +11,13 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.arutech.sargam.SargamApplication;
-import com.arutech.sargam.data.store.ThemeStore;
 import com.arutech.sargam.databinding.FragmentMiniplayerBinding;
 import com.arutech.sargam.viewmodel.MiniplayerViewModel;
-
-import javax.inject.Inject;
 
 public class MiniplayerFragment extends BaseFragment {
 
     private FragmentMiniplayerBinding mBinding;
 
-    @Inject
-    ThemeStore mThemeStore;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,7 +38,7 @@ public class MiniplayerFragment extends BaseFragment {
             LayerDrawable progressBarDrawable = (LayerDrawable) progressBar.getProgressDrawable();
 
             Drawable progress = progressBarDrawable.findDrawableByLayerId(android.R.id.progress);
-            progress.setColorFilter(mThemeStore.getAccentColor(), PorterDuff.Mode.SRC_ATOP);
+
         }
 
         return mBinding.getRoot();
